@@ -19,25 +19,13 @@ cum_false_positive(x)
 \item{x}{a \linkS4class{panel}}
 }
 \value{
-Functions \code{\link[=true_positive]{true_positive()}} and \code{\link[=false_positive]{false_positive()}} both
-return a \link[base]{integer} \link[base]{vector}.
+Functions \code{\link[=true_positive]{true_positive()}} and \code{\link[=false_positive]{false_positive()}} return
+a \link[base]{integer} \link[base]{vector}.
 
-Function \code{\link[=cum_true_positive]{cum_true_positive()}} returns
+Function \code{\link[=cum_true_positive]{cum_true_positive()}} and \code{\link[=cum_false_positive]{cum_false_positive()}} return
 a (not strictly) increasing \link[base]{integer} \link[base]{vector}.
 }
 \description{
 Number of True & False Positives, per variant
-}
-\details{
-Function \code{\link[=true_positive]{true_positive()}} finds the
-number of true positives, per variant.
-This is a \link[base]{rowSums} of slot \verb{@m1}.
-
-Function \code{\link[=false_positive]{false_positive()}} finds the
-number of false positives, per variant.
-This is a \link[base]{rowSums} of slot \verb{@m0}.
-
-Function \code{\link[=cum_true_positive]{cum_true_positive()}} finds the
-number of true positives, by a panel of first \eqn{i} variants.
 }
 \keyword{internal}
