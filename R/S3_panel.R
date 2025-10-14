@@ -174,3 +174,26 @@ sort_by.panel <- function(x, y, ...) {
 }
 
 
+
+#' @title as_flextable.panel
+#' 
+#' @param x a \linkS4class{panel}
+#' 
+#' @param ... ..
+#' 
+#' @keywords internal
+#' @export as_flextable.panel
+#' @export
+as_flextable.panel <- function(x, ...) {
+  
+  data.frame(
+    Collection = names(x@id),
+    Variants = x@id |>
+      vapply(FUN = paste, collapse = '\n', FUN.VALUE = '')
+  ) |>
+    flextable() |>
+    autofit() |>
+    hline()
+    
+}
+

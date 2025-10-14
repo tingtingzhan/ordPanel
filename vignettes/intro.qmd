@@ -75,7 +75,7 @@ library(flextable)
 
 Study data should be described in a peer-reviewed manuscript in the following language.
 
-> `<Biology>` samples from $N=N_1$ `<positive.subjects>` were obtained from our collaborators `<institutionA-1>`, `<institutionA-2>` under approved IRB protocols.  `<Biology>` samples from $N=N_0$ `<negative.subjects>` from `<institutionB-1>`, `<institutionB-2>` were used as controls.  Demographic information of human subjects is shown in `<table>` and `<supplementary materials>`.
+> `<Biology>` samples from $n_1$ `<positive.subjects>` were obtained from our collaborators `<institutionA-1>`, `<institutionA-2>` under approved IRB protocols.  `<Biology>` samples from $n_0$ `<negative.subjects>` from `<institutionB-1>`, `<institutionB-2>` were used as controls.  Demographic information of human subjects is shown in `<table>` and `<supplementary materials>`.
 
 Data from @Zezulinski25 is included in package **`minPanel`**.
 
@@ -105,7 +105,7 @@ m0 |>
 
 # Panel of Variant-Collections {#sec-panel}
 
-Function `panel()` identifies the variants that identifies the same set of subjects in both *`m1`* and *`m0`*.  These variants are considered identical in terms of *`m1`* and *`m0`*.  Therefore they are put in one **variant-collection**.  We use *"collection"* for short in this vignette.
+Function `panel()` identifies the variants that identifies the same set of positive subjects in *`m1`*, and the same set of negative subjects in *`m0`*.  These variants are considered identical in terms of *`m1`* and *`m0`*.  Therefore they are put in one **variant-collection**.  We use *"collection"* for short in this vignette.
 
 ```{r}
 m = panel(m1 = m1, m0 = m0)
@@ -146,11 +146,11 @@ x0 = m |>
 
 The pipeline above consists of five steps.
 
-1. The `S3` method dispatch `subset.panel()` (Appendix @sec-subset) selects the collections that identify at least one positive subjects *per collection* (Appendix @sec-positive).
-2. The `S3` method dispatch `subset.panel()` selects the collections that identify none of the negative subjects *per collection* (Appendix @sec-positive).  The [*per-collection* criterion]{style="background-color: #FFFF00"} *`'False(+) ≤0/31'`* is `append`ed to the `@label` of the output.
-3. The `S3` method dispatch `sort_by.panel()` (Appendix @sec-sortby) sorts the collections by their number of positive subjects identified *per collection* (Appendix @sec-positive), in `decreasing` order.
-4. The `S3` method dispatch `subset.panel()` identifies the collections, so that each one collection identifies at least one more positive subjects than all the preceding collections (Appendix @sec-positive).
-5. Function `append_label()` (Appendix @sec-appendlabel) summarizes the number of negative subjects identified *as a panel of collections* (Appendix @sec-positive).  The [*panel-wise* criterion]{style="background-color: #FFFF00"} *`'panelFalse(+) ≤0/31'`* is `append`ed to the `@label` of the output.
+1. The first call to `subset()` (Appendix @sec-subset) selects the collections that identify at least one positive subjects *per collection* (Appendix @sec-positive).
+2. The second call to `subset()` selects the collections that identify none of the negative subjects *per collection* (Appendix @sec-positive).  The [*per-collection* criterion]{style="background-color: #FFFF00"} *`'False(+) ≤0/31'`* is `append`ed to the `@label` of the output.
+3. The call to `sort_by()` (Appendix @sec-sortby) sorts the collections by their number of positive subjects identified *per collection* (Appendix @sec-positive), in `decreasing` order.
+4. The last call to `subset()` identifies the collections, so that each one collection identifies at least one more positive subjects than all the preceding collections (Appendix @sec-positive).
+5. The call to `append_label()` (Appendix @sec-appendlabel) summarizes the number of negative subjects identified *as a panel of collections* (Appendix @sec-positive).  The [*panel-wise* criterion]{style="background-color: #FFFF00"} *`'panelFalse(+) ≤0/31'`* is `append`ed to the `@label` of the output.
 
 
 ```{r}
@@ -170,7 +170,7 @@ x0 |>
 ```
 
 
-Next, we create
+Similarly, we relax the constraint on `false_positive`-per-collection and create
 
 ```{r}
 #| code-fold: true
@@ -183,13 +183,10 @@ x1 = m |>
   append_label(info = 'cum_false_positive')
 ```
 
-Panel *`x1`* has a *panel-wise* false positive of 7 out of 31 negative subjects.
- 
 ```{r}
 x1
 ```
 
-Similarly, we create
 
 ```{r}
 #| code-fold: true
@@ -204,6 +201,10 @@ x2
 ```
 
 
+```{r}
+x2
+```
+
 
 ```{r}
 #| code-fold: true
@@ -217,6 +218,9 @@ x3 = m |>
 x3
 ```
 
+```{r}
+x3
+```
 
 
 
@@ -261,7 +265,7 @@ z |>
   autoplot()
 ```
 
-## Selected Variant-Collections
+## Selected Collections
 
 
 The `S3` method dispatch `as_flextable.panellist()` displays the collections selected in each `panel`.  The collections that contain more than one variants are highlighted using the [light-yellow]{style="background-color: lightyellow"} color.
@@ -452,18 +456,13 @@ R terminology and nomenclature could be *drastically different* from that of mat
 | [`:`](https://search.r-project.org/R/refmans/base/html/Colon.html) | Colon operator for [`interaction`](https://search.r-project.org/R/refmans/base/html/interaction.html) of [`factor`](https://search.r-project.org/R/refmans/base/html/factor.html)s, see section *Details* of [`formula`](https://search.r-project.org/R/refmans/stats/html/formula.html) documentation |
 | `/` | Forward slash operator for nested grouping structure, see section *Details* of [`formula`](https://search.r-project.org/R/refmans/stats/html/formula.html) documentation |
 | [`::`, `:::`](https://search.r-project.org/R/refmans/base/html/ns-dblcolon.html) | Double and triple colon operators, explicitly-[namespace](https://search.r-project.org/R/refmans/base/html/ns-reflect.html)d function or object |
-| [`anylist`](https://search.r-project.org/CRAN/refmans/spatstat.geom/html/anylist.html) | List of objects of any type, from package **`spatstat.geom`** |
 | [`args`](https://search.r-project.org/R/refmans/base/html/args.html) | Argument list of a [`function`](https://search.r-project.org/R/refmans/base/html/function.html) |
 | [`attr`](https://search.r-project.org/R/refmans/base/html/attr.html), [`attributes`](https://search.r-project.org/R/refmans/base/html/attributes.html) | Attributes |
 | [`body`](https://search.r-project.org/R/refmans/base/html/body.html) | Body of a [`function`](https://search.r-project.org/R/refmans/base/html/function.html) |
-| [`cor`, `cov`, `cov2cor`](https://search.r-project.org/R/refmans/stats/html/cor.html) | Correlation matrix, variance-covariance matrix, and their conversion |
-| [`cor.spatial`](https://search.r-project.org/CRAN/refmans/SpatialPack/html/cor.spatial.html) | Tjøstheim's nonparametric correlation coefficient, from package **`SpatialPack`** [@SpatialPack] |
 | [`data.frame`](https://search.r-project.org/R/refmans/base/html/data.frame.html) | Data frame |
 | [`.Deprecated`](https://search.r-project.org/R/refmans/base/html/Deprecated.html), [`.Defunct`](https://search.r-project.org/R/refmans/base/html/Defunct.html) | R function retirement |
 | [`deparse`, `deparse1`](https://search.r-project.org/R/refmans/base/html/deparse.html) | Expression deparsing, i.e., turn unevaluated expressions into `character` scalar or `vector` |
 | [`diag`](https://search.r-project.org/R/refmans/base/html/diag.html) | Matrix diagonals |
-| [`dist`](https://search.r-project.org/R/refmans/stats/html/dist.html) | Distance matrix |
-| [`ecdf`](https://search.r-project.org/R/refmans/stats/html/ecdf.html) | Empirical cumulative distribution function |
 | [`environment`](https://search.r-project.org/R/refmans/base/html/environment.html), [`as.environment`](https://search.r-project.org/R/refmans/base/html/as.environment.html) | (Coerce to an) environment |
 | [`eval`](https://search.r-project.org/R/refmans/base/html/eval.html) | Evaluate an R `expression` |
 | [`export`](https://cran.r-project.org/web/packages/roxygen2/vignettes/namespace.html) | Export tags in [NAMESPACE](https://bookdown.dongzhuoer.com/hadley/r-pkgs/namespace) |
@@ -474,18 +473,11 @@ R terminology and nomenclature could be *drastically different* from that of mat
 | `foobar` | Placeholder; <https://en.wikipedia.org/wiki/Foobar> |
 | [`formals`](https://search.r-project.org/R/refmans/base/html/formals.html) | Formal arguments of R function |
 | [`function`](https://search.r-project.org/R/refmans/base/html/function.html) | R function definition |
-| [`fv`](https://search.r-project.org/CRAN/refmans/spatstat.explore/html/fv.html), [`fv.object`](https://search.r-project.org/CRAN/refmans/spatstat.explore/html/fv.object.html), [`plot.fv`](https://search.r-project.org/CRAN/refmans/spatstat.explore/html/plot.fv.html) | (Plot of) function-value-table, from package **`spatstat.explore`** |
 | [`ggplot`](https://search.r-project.org/CRAN/refmans/ggplot2/html/ggplot.html) | Elegant data visualisations using the grammar-of-graphics, from package **`ggplot2`** [@ggplot2] |
-| [`global_envelope_test`](https://search.r-project.org/CRAN/refmans/GET/html/global_envelope_test.html) | Global envelope test, from package **`GET`** [@GET] |
-| [`groupedHyperframe`](https://CRAN.R-project.org/package=groupedHyperframe) | Grouped hyper data frame |
-| `hypercolumns`, [`hyperframe`](https://search.r-project.org/CRAN/refmans/spatstat.geom/html/hyperframe.html) | (Hyper columns of) hyper data frame, from package **`spatstat.geom`** |
 | [`identical`](https://search.r-project.org/R/refmans/base/html/identical.html) | Exact equality in R |
-| [`im`](https://search.r-project.org/CRAN/refmans/spatstat.geom/html/im.html) | Pixel image object, from package **`spatstat.geom`** |
 | [`inherits`](https://search.r-project.org/R/refmans/base/html/class.html) | Class inheritance |
 | [`Inf`, `is.finite`](https://search.r-project.org/R/refmans/base/html/is.finite.html) | Positive infinity $\infty$ |
 | [`kable`](https://search.r-project.org/CRAN/refmans/knitr/html/kable.html) | Tables in LaTeX, HTML, markdown and reStructuredText, from package **`knitr`** [@knitr] |
-| `kerndens` | Kernel [`density`](https://search.r-project.org/R/refmans/stats/html/density.html), `stats::density.default()$y` |
-| [`kmeans`](https://search.r-project.org/R/refmans/stats/html/kmeans.html) | $k$-means clustering [@kmeans] |
 | [`language`](https://search.r-project.org/R/refmans/base/html/is.language.html) | R language object |
 | [`length`](https://search.r-project.org/R/refmans/base/html/length.html) | Length of an object |
 | [`lengths`](https://search.r-project.org/R/refmans/base/html/lengths.html) | Lengths of `list` or `vector` elements |
@@ -494,8 +486,6 @@ R terminology and nomenclature could be *drastically different* from that of mat
 | [`list2env`](https://search.r-project.org/R/refmans/stats/html/list2env.html) | Create an `environment` containing all `list` components as objects |
 | [`log`, `log1p`, `log2`, `log10`](https://search.r-project.org/R/refmans/base/html/Log.html) | $\log(x)$ and $\log(x+1)$ transformations |
 | [`.Machine`](https://search.r-project.org/R/refmans/base/html/zMachine.html) | Numerical characteristics of the machine R is running on, e.g., 32-bit integers and IEC 60559 floating-point (double precision) arithmetic |
-| [`markformat`](https://search.r-project.org/CRAN/refmans/spatstat.geom/html/spatstat.geom-internal.html) | Storage mode of `marks`, from package **`spatstat.geom`** |
-| [`marks`](https://search.r-project.org/CRAN/refmans/spatstat.geom/html/spatstat.geom-internal.html), [`is.marked`](https://search.r-project.org/CRAN/refmans/spatstat.geom/html/is.marked.html) | Marks of a point-pattern, from package **`spatstat.geom`** |
 | [`match`](https://search.r-project.org/R/refmans/base/html/match.html) | Value matching |
 | [`matrix`](https://search.r-project.org/R/refmans/base/html/matrix.html) | Matrices |
 | [`merge`, `merge.data.frame`](https://search.r-project.org/R/refmans/base/html/merge.html) | Merge two `data.frame`s |
@@ -503,41 +493,29 @@ R terminology and nomenclature could be *drastically different* from that of mat
 | [`message`](https://search.r-project.org/R/refmans/base/html/message.html) | Diagnostic message printed in R console |
 | [`missing`](https://search.r-project.org/R/refmans/base/html/missing.html) | R [`function`](https://search.r-project.org/R/refmans/base/html/function.html) not having a default value for a [`formals`](https://search.r-project.org/R/refmans/base/html/formals.html) argument |
 | [storage `mode`](https://search.r-project.org/R/refmans/base/html/mode.html), [vector `mode`](https://search.r-project.org/R/refmans/base/html/vector.html) | Storage mode; vector mode |
-| [`multitype`](https://search.r-project.org/CRAN/refmans/spatstat.geom/html/spatstat.geom-internal.html) | Multitype spatial object, from package **`spatstat.geom`** |
 | [`NaN`](https://search.r-project.org/R/refmans/base/html/is.finite.html) | Not-a-Number |
 | [`na.fail`, `na.omit`, `na.exclude`, `na.pass`](https://search.r-project.org/R/refmans/stats/html/na.fail.html) | Handle missing values in R objects |
 | [`names`](https://search.r-project.org/R/refmans/base/html/names.html) | Names of an R object |
 | [`ncol`, `nrow`](https://search.r-project.org/R/refmans/base/html/nrow.html) | Number of rows/columns of an [`array`](https://search.r-project.org/R/refmans/base/html/array.html) |
-| [`npoints`](https://search.r-project.org/CRAN/refmans/spatstat.geom/html/npoints.html) | Number of points in a point-pattern, from package **`spatstat.geom`** |
 | [`numeric`](https://search.r-project.org/R/refmans/base/html/numeric.html) | numeric, i.e., [`double`](https://search.r-project.org/R/refmans/base/html/double.html)-precision object |
 | [`object.size`](https://search.r-project.org/R/refmans/utils/html/object.size.html) | Memory allocation |
 | [`pi`](https://search.r-project.org/R/refmans/base/html/Constants.html) | Mathematical constant $\pi$ |
 | `pmean`, `pmedian` | Point-wise mean and median, from package `groupedHyperframe` |
 | [`pmax`, `pmin`](https://search.r-project.org/R/refmans/base/html/Extremes.html) | Point-wise maxima and minima |
-| [`ppp`](https://search.r-project.org/CRAN/refmans/spatstat.geom/html/ppp.html), [`ppp.object`](https://search.r-project.org/CRAN/refmans/spatstat.geom/html/ppp.object.html) | (Marked) point-pattern, from package **`spatstat.geom`** |
-| `ppplist` | List of [`ppp.object`](https://search.r-project.org/CRAN/refmans/spatstat.geom/html/ppp.object.html)s, which inherits from [`solist`](https://search.r-project.org/CRAN/refmans/spatstat.geom/html/solist.html), from package **`spatstat.geom`** |
 | [`.Primitive`](https://search.r-project.org/R/refmans/base/html/Primitive.html) | *Primitive*, i.e., internally implemented, function |
-| [`quantile`](https://search.r-project.org/R/refmans/stats/html/quantile.html) | Quantile |
 | [`range`](https://search.r-project.org/R/refmans/base/html/range.html) | Range of values |
 | [`return`](https://search.r-project.org/R/refmans/base/html/function.html) | R function return |
-| [`rnorm`](https://search.r-project.org/R/refmans/stats/html/Normal.html) | Random number generator for [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution) |
-| [`rlnorm`](https://search.r-project.org/R/refmans/stats/html/Lognormal.html) | Random number generator for [log-normal distribution](https://en.wikipedia.org/wiki/Log-normal_distribution) |
 | `S3`, `generic`, [`UseMethod`](https://search.r-project.org/R/refmans/base/html/UseMethod.html), [`methods`](https://search.r-project.org/R/refmans/utils/html/methods.html), [`getS3method`](https://search.r-project.org/R/refmans/utils/html/getS3method.html) | `S3` object oriented system, <https://adv-r.hadley.nz/s3.html> |
 | `S4`, [`isS4`](https://search.r-project.org/R/refmans/base/html/isS4.html), [`setClass`](https://search.r-project.org/R/refmans/methods/html/setClass.html), [`setGeneric`](https://search.r-project.org/R/refmans/methods/html/setGeneric.html), [`setMethod`](https://search.r-project.org/R/refmans/methods/html/setMethod.html), [`getMethod`](https://search.r-project.org/R/refmans/methods/html/getMethod.html) | `S4` object oriented system, <https://adv-r.hadley.nz/s4.html>, implemented in package **`methods`** shipped with `r R.version.string` |
-| `S7`, [`new_generic`](https://search.r-project.org/CRAN/refmans/S7/html/new_generic.html), [`method`](https://search.r-project.org/CRAN/refmans/S7/html/method.html) | `S7` object oriented system, a successor to `S3` and `S4`, <https://rconsortium.github.io/S7>, currently in package **`S7`** [@S7] |
 | [`save`](https://search.r-project.org/R/refmans/base/html/save.html), [`saveRDS`](https://search.r-project.org/R/refmans/base/html/readRDS.html), `xz` | Save with [`xz`](https://en.wikipedia.org/wiki/XZ_Utils) compression |
-| [`sd`](https://search.r-project.org/R/refmans/stats/html/sd.html) | Standard deviation |
 | [`search`](https://search.r-project.org/R/refmans/base/html/search.html) | Search path |
 | [`seq`, `seq.int`](https://search.r-project.org/R/refmans/base/html/search.html) | Sequence generation |
 | [`signature`](https://search.r-project.org/R/refmans/methods/html/GenericFunctions.html) | Tools for managing `S4` generic functions |
-| [`solist`](https://search.r-project.org/CRAN/refmans/spatstat.geom/html/solist.html) | List of two-dimensional spatial objects, from package **`spatstat.geom`** |
 | [`split`](https://search.r-project.org/R/refmans/base/html/split.html) | Divide into groups |
 | [`stopifnot`](https://search.r-project.org/R/refmans/base/html/stopifnot.html) | To ensure the truth of R [`expression`](https://search.r-project.org/R/refmans/base/html/expression.html)s |
-| [`Surv`](https://search.r-project.org/CRAN/refmans/survival/html/Surv.html) | Survival, i.e., time-to-event, object, from package **`survival`** [@survival] |
 | [`symbol`, `name`](https://search.r-project.org/R/refmans/base/html/name.html) | R object name/symbol |
 | [`t`, `t.default`](https://search.r-project.org/R/refmans/base/html/t.html) | Transpose |
 | [`tempfile`](https://search.r-project.org/R/refmans/base/html/tempfile.html) | Create names for temporary files |
-| [`trapz`, `cumtrapz`](https://search.r-project.org/CRAN/refmans/pracma/html/trapz.html) | (Cumulative) [trapezoidal integration](https://en.wikipedia.org/wiki/Trapezoidal_rule), from package **`pracma`** [@pracma] |
 | [`typeof`](https://search.r-project.org/R/refmans/base/html/typeof.html) | R internal type or storage mode of any object |
 | [`unclass`](https://search.r-project.org/R/refmans/base/html/class.html) | Remove `S3` `'class'` attribute |
 | [`vector`](https://search.r-project.org/R/refmans/base/html/vector.html) | Vector |
