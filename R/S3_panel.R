@@ -182,18 +182,48 @@ sort_by.panel <- function(x, y, ...) {
 #' @param ... ..
 #' 
 #' @keywords internal
+#' @importFrom scales label_percent
 #' @export as_flextable.panel
 #' @export
 as_flextable.panel <- function(x, ...) {
   
+  n1 <- ncol(x@m1)
+  n0 <- ncol(x@m0)
+  c1 <- cumsum1(x)
+  c0 <- cumsum0(x)
+  
   data.frame(
-    Collection = names(x@id),
-    Variants = x@id |>
-      vapply(FUN = paste, collapse = '\n', FUN.VALUE = '')
+    'Variant-Signature' = names(x@id),
+    'Variants in Signature' = x@id |>
+      vapply(FUN = paste, collapse = '\n', FUN.VALUE = ''),
+    'True(+)' = sprintf(fmt = '%d/%d', sum1(x), n1),
+    'False(+)' = sprintf(fmt = '%d/%d', sum0(x), n0),
+    'Sub-Panel True(+)' = (c1/n1) |>
+      label_percent(accuracy = .1)() |>
+      sprintf(fmt = '%s =%d/%d', . = _, c1, n1),
+    'Sub-Panel False(+)' = (c0/n0) |>
+      label_percent(accuracy = .1)() |>
+      sprintf(fmt = '%s =%d/%d', . = _, c0, n0),
+    check.names = FALSE
   ) |>
     flextable() |>
-    autofit() |>
-    hline()
-    
+    autofit(part = 'all') |>
+    highlight(
+      i = (lengths(x@id) > 1L), 
+      j = 2L, 
+      color = 'lightyellow'
+    ) |>
+    add_header_row(
+      values = c(
+        'Variant-Signature', 'Variants in Signature', 
+        'Individual Signature', 
+        x@label |>
+          sprintf(fmt = 'Ordered Sub-Panel\n%s')
+      ),
+      colwidths = c(1L, 1L, 2L, 2L),
+      top = TRUE) |> 
+    merge_v(part = 'header') |>
+    align(align = 'center', part = 'all')
+
 }
 

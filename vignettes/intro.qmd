@@ -111,22 +111,22 @@ m0 |>
   head(n = c(3L, 3L))
 ```
 
-# Panel of Variant-Collections {#sec-panel}
+# Panel of Variant-Signatures {#sec-panel}
 
-@lst-panel consolidates the variants that identify the same set of positive subjects in @lst-m1 and the same set of negative subjects in @lst-m0.  In other words, these variants are considered identical in terms of @lst-m1 and @lst-m0.  Therefore they are consolidated into one *variant-collection*.
+@lst-panel consolidates the variants that identify the same set of positive subjects in @lst-m1 and the same set of negative subjects in @lst-m0.  In other words, these variants are considered identical in terms of @lst-m1 and @lst-m0.  Therefore they are consolidated into one *variant-signature*.
 
 ```{r}
 #| lst-label: lst-panel
-#| lst-cap: 'Variant collections'
+#| lst-cap: 'Variant signatures in @lst-m1 and @lst-m0'
 (m = panel(m1 = m1, m0 = m0))
 ```
 
-@lst-panel consolidates the `r nrow(m1)` variants in @lst-m1 and @lst-m0 into `r length(m@id)` variant-collections.  For example, the variants below (@lst-panel_eg) identify the same set of positive and negative subjects, thus they are consolidated as one collection.
+@lst-panel consolidates the `r nrow(m1)` variants in @lst-m1 and @lst-m0 into `r length(m@id)` variant-signatures.  For example, the variants below (@lst-panel_eg) identify the same set of positive and negative subjects, thus they are consolidated as one signature.
 
 ```{r}
 #| code-fold: true
 #| lst-label: lst-panel_eg
-#| lst-cap: 'e.g., variants consolidated in one variant-collection'
+#| lst-cap: 'e.g., variants consolidated in one variant-signature'
 m@id[[8L]] |>
   cat(sep = '\n')
 ```
@@ -136,13 +136,16 @@ m@id[[8L]] |>
 
 Methodology should be described in a peer-reviewed manuscript in the following language.
 
-> An *ordered panel* of variant-collections is determined using the following steps: (1) we exclude the collections that identify none of the `<positive.subjects>` *per collection*; (2) we exclude the collections that identify `1`-or-more `<negative.subjects>` *per collection*; (3) we sort the remaining collections by the number of `<positive.subjects>` identified *per collection*, from most to least; (4) we exclude  the collections that identify no more `<positive.subjects>` than all the preceding collections.  Such panel of collections is ***ordered***, i.e., a researcher may reduce the size of the panel by keeping the collections in the top of the panel and dropping those in the bottom of the panel.  `<Figure>` is the Consolidated Standards of Reporting Trials (CONSORT) diagram of this selection procedure. This methodology is implemented in R (@R) package **`minPanel`** (citation coming soon).
+> An *ordered panel* of variant-signatures is determined using the following steps: (1) exclude the signatures that identify none of the `<positive.subjects>` *per signature*; (2) exclude the signatures that identify `1`-or-more `<negative.subjects>` *per signature* (e.g., @lst-p0); (3) sort the remaining signatures by the number of `<positive.subjects>` identified *per signature*, from most to least; (4) excludethe signatures that identify no more `<positive.subjects>` than all the preceding signatures.  Such panel of signatures is ***ordered***, i.e., a researcher may reduce the size of the ordered-panel by keeping the signatures in the top of the ordered-panel and dropping those in the bottom of the ordered-panel.  `<Figure>` (e.g., @fig-consort0) presents the [Consolidated Standards of Reporting Trials (CONSORT)](https://en.wikipedia.org/wiki/Consolidated_Standards_of_Reporting_Trials) diagram of the creation of an ordered panel.  `<Table>` (e.g., @lst-flextable_panel) summarizes the true and false positive rates per signature, as well as per ordered sub-panel selected by a researcher. The ordered-panel methodology is implemented in R (@R) package **`minPanel`** (citation coming soon).
+
+## `'False(+) ≤0'`
+
 
 
 ```{r}
 #| lst-label: lst-x0_create
-#| lst-cap: 'Ordered panel *`x0`*: controlled at `0`-or-less `False(+)` per collection'
-x0 = m |>
+#| lst-cap: 'Ordered panel *`p0`*: controlled at `0`-or-less `False(+)` per signature'
+p0 = m |>
   subset(subset = sum1 > 0L) |>
   subset(subset = sum0 <= 0L, append.label = TRUE) |>
   sort_by(y = ~ sum1, decreasing = TRUE) |>
@@ -151,101 +154,133 @@ x0 = m |>
 ```
 
 
-The pipeline @lst-x0 consists of five steps.
+The pipeline @lst-x0_create consists of five steps.
 
-1. The first call to `subset()` (Appendix @sec-subset) selects the collections that identify at least one positive subjects *per collection* (Appendix @sec-positive).
-2. The second call to `subset()` selects the collections that identify none of the negative subjects *per collection* (Appendix @sec-positive).  The [*per-collection* criterion]{style="background-color: #FFFF00"} *`'False(+) ≤0/31'`* is `append`ed to the `@label` of the output.
-3. The call to `sort_by()` (Appendix @sec-sortby) sorts the collections by their number of positive subjects identified *per collection* (Appendix @sec-positive), in `decreasing` order.
-4. The last call to `subset()` identifies the collections, so that each one collection identifies at least one more positive subjects than all the preceding collections (Appendix @sec-positive).
-5. The call to `append_label()` (Appendix @sec-appendlabel) summarizes the number of negative subjects identified *as a panel of collections* (Appendix @sec-positive).  The [*panel-wise* criterion]{style="background-color: #FFFF00"} *`'panelFalse(+) ≤0/31'`* is `append`ed to the `@label` of the output.
+1. The first call to `subset()` (Appendix @sec-subset) selects the signatures that identify at least one positive subjects *per signature* (Appendix @sec-positive).
+2. The second call to `subset()` selects the signatures that identify none of the negative subjects *per signature* (Appendix @sec-positive).  The [*per-signature* criterion]{style="background-color: #FFFF00"} *`'False(+) ≤0/31'`* is `append`ed to the `@label` of the output.
+3. The call to `sort_by()` (Appendix @sec-sortby) sorts the signatures by their number of positive subjects identified *per signature* (Appendix @sec-positive), in `decreasing` order.
+4. The last call to `subset()` identifies the signatures, so that each one signature identifies at least one more positive subjects than all the preceding signatures (Appendix @sec-positive).
+5. The call to `append_label()` (Appendix @sec-appendlabel) summarizes the number of negative subjects identified *as a panel of signatures* (Appendix @sec-positive).  The [*panel-wise* criterion]{style="background-color: #FFFF00"} *`'panelFalse(+) ≤0/31'`* is `append`ed to the `@label` of the output.
 
+@lst-p0 prints the vital information of the ordered panel @lst-x0_create.
 
 ```{r}
-#| lst-label: lst-x0
-#| lst-cap: 'Ordered panel *`x0`*: controlled at `0`-or-less `False(+)` per collection'
-x0
+#| lst-label: lst-p0
+#| lst-cap: 'Ordered panel *`p0`*: controlled at `0`-or-less `False(+)` per signature'
+p0
 ```
 
-@fig-consort0 (@lst-consort_panel) presents a Consolidated Standards of Reporting Trials (CONSORT) diagram of the creation of the ordered panel @lst-x0.
+
+
+@fig-consort0 (@lst-consort_panel) presents a Consolidated Standards of Reporting Trials (CONSORT) diagram of the creation of the ordered panel @lst-p0.
 
 
 
 ```{r}
 #| lst-label: lst-consort_panel
-#| lst-cap: 'CONSORT Diagram of ordered panel @lst-x0'
+#| lst-cap: 'CONSORT Diagram of ordered panel @lst-p0'
 #| fig-height: 2.5
 #| fig-width: 5
 #| fig-align: left
-#| fig-cap: 'CONSORT Diagram of ordered panel @lst-x0'
+#| fig-cap: 'CONSORT Diagram of Ordered Panel @lst-p0'
 #| label: fig-consort0
-x0 |>
+p0 |>
   consort.panel()
 ```
 
-
-Similarly, we relax the constraint on `False(+)`-per-collection and create @lst-x1 - @lst-x3.
+@lst-flextable_panel displays the variant-signatures in the ordered panel @lst-p0, and summarizes the true and false positive rates per signature, as well as per ordered sub-panel selected by a researcher.  Those variant-signatures that contain more than one variants are highlighted in [light-yellow]{style="background-color: lightyellow"} color.
 
 ```{r}
-#| lst-label: lst-x1
-#| lst-cap: 'Ordered panel *`x1`*: controlled at `1`-or-less `False(+)` per collection'
-x1 = m |>
+#| lst-label: lst-flextable_panel
+#| lst-cap: 'Variant-signatures in ordered panel @lst-p0'
+#| tbl-cap: 'Variant-Signatures in Ordered Panel'
+p0 |>
+  as_flextable()
+```
+
+
+Similarly, we relax the constraint on `False(+)`-per-signature and create @lst-p1 - @lst-p3.
+
+## `'False(+) ≤1'`
+
+```{r}
+#| lst-label: lst-p1
+#| lst-cap: 'Ordered panel *`p1`*: controlled at `1`-or-less `False(+)` per signature'
+p1 = m |>
   subset(subset = sum1 > 0L) |>
   subset(subset = sum0 <= 1L, append.label = TRUE) |>
   sort_by(y = ~ sum1, decreasing = TRUE) |>
   subset(subset = diff(cumsum1) > 0L) |>
   append_label(info = 'cumsum0')
-x1
+p1
+```
+
+```{r}
+p1 |>
+  as_flextable()
 ```
 
 
+## `'False(+) ≤2'`
+
 ```{r}
-#| lst-label: lst-x2
-#| lst-cap: 'Ordered panel *`x2`*: controlled at `2`-or-less `False(+)` per collection'
-x2 = m |>
+#| lst-label: lst-p2
+#| lst-cap: 'Ordered panel *`p2`*: controlled at `2`-or-less `False(+)` per signature'
+p2 = m |>
   subset(subset = sum1 > 0L) |>
   subset(subset = sum0 <= 2L, append.label = TRUE) |>
   sort_by(y = ~ sum1, decreasing = TRUE) |>
   subset(subset = diff(cumsum1) > 0L) |>
   append_label(info = 'cumsum0')
-x2
+p2
+```
+
+```{r}
+p2 |>
+  as_flextable()
 ```
 
 
+## `'False(+) ≤3'`
 
 ```{r}
-#| lst-label: lst-x3
-#| lst-cap: 'Ordered panel *`x3`*: controlled at `3`-or-less `False(+)` per collection'
-x3 = m |>
+#| lst-label: lst-p3
+#| lst-cap: 'Ordered panel *`p3`*: controlled at `3`-or-less `False(+)` per signature'
+p3 = m |>
   subset(subset = sum1 > 0L) |>
   subset(subset = sum0 <= 3L, append.label = TRUE) |>
   sort_by(y = ~ sum1, decreasing = TRUE) |>
   subset(subset = diff(cumsum1) > 0L) |>
   append_label(info = 'cumsum0')
-x3
+p3
+```
+
+```{r}
+p3 |>
+  as_flextable()
 ```
 
 
-
-# Operating Characteristics
+# Ordered Panel List
 
 @lst-panellist collects multiple ordered panels.
 
 ```{r}
 #| lst-label: lst-panellist
-#| lst-cap: 'Ordered panel list containing @lst-x0 - @lst-x3'
-(z = panellist(x0, x1, x2, x3))
+#| lst-cap: 'Ordered panel list containing @lst-p0 - @lst-p3'
+(z = panellist(p0, p1, p2, p3))
 ```
 
 
 
-## Visualization
+## Operating Characteristics
 
 The operating characteristics should be described in a peer-reviewed manuscript in the following language.
 
-> `<Figure_oc>` presents the operating characteristic curves of multiple ordered panels of variant-collections.  The $x$-axis is the number of variant-collections that are selected from each ordered panel by the investigator.  The $y$-axis is the percentage of `<positive.subjects>` identified, i.e., the sensitivity, for each selected number of variant-collections.  An operating characteristics curve moves towards the upper-left corner to indicate a better performance, i.e., higer sensitivity with lower number of variant-collections selected from the ordered panel. 
+> `<Figure_oc>` presents the operating characteristic curves of multiple ordered panels of variant-signatures.  The $x$-axis is the number of variant-signatures that are selected from each ordered panel by the investigator.  The $y$-axis is the percentage of `<positive.subjects>` identified, i.e., the sensitivity, for each selected number of variant-signatures.  An operating characteristics curve moves towards the upper-left corner to indicate a better performance, i.e., higer sensitivity with lower number of variant-signatures selected from the ordered panel. 
 >
-> `<Figure_roc>` presents the *pseudo* receiver operating characteristic (ROC) curves of multiple ordered panels of variant-collections. The $x$-axis is the non-specificity for each selected number of variant-collections.  The $y$-axis is the percentage of `<positive.subjects>` identified, i.e., the sensitivity, for each selected number of variant-collections. 
-This is a *pseudo* ROC curve, as each sensitivity-non-specificity pair on this curve corresponds to a different selected number of variant-collections.
+> `<Figure_roc>` presents the *pseudo* receiver operating characteristic (ROC) curves of multiple ordered panels of variant-signatures. The $x$-axis is the non-specificity for each selected number of variant-signatures.  The $y$-axis is the percentage of `<positive.subjects>` identified, i.e., the sensitivity, for each selected number of variant-signatures. 
+This is a *pseudo* ROC curve, as each sensitivity-non-specificity pair on this curve corresponds to a different selected number of variant-signatures.
 
 ```{r}
 #| echo: false
@@ -253,15 +288,15 @@ This is a *pseudo* ROC curve, as each sensitivity-non-specificity pair on this c
 scales::pal_hue()(n = 4L)
 ```
 
-@fig-oc_panellist (@lst-oc_panellist) and @fig-roc_panellist (@lst-roc_panellist) visualize the operating characteristic and the  *pseudo* receiver operating characteristic curves of the panel-list @lst-panellist.  It is concluded that the [**ordered panel @lst-x1**]{style="color: #7CAE00"}, controlled at a per-collection false positive of `<=1/31`, is the optimal among the four ordered panels.  
+@fig-oc_panellist (@lst-oc_panellist) and @fig-roc_panellist (@lst-roc_panellist) visualize the operating characteristic and the  *pseudo* receiver operating characteristic curves of the ordered panel-list @lst-panellist.  It is concluded that the [**ordered panel @lst-p1**]{style="color: #7CAE00"}, controlled at a per-signature false positive of `<=1/31`, is the optimal among the four ordered panels.  
 
-Compared to the [**ordered panel @lst-x1**]{style="color: #7CAE00"},
+Compared to the [**ordered panel @lst-p1**]{style="color: #7CAE00"},
 
--   the [ordered panel @lst-x0]{style="color: #F8766D"}, controlled at a more stringent criterion of per-collection false positive of `<=0/31`, has 
-    -   lower sensitivity, assuming the same number of variant-collections selected (@fig-oc_panellist);  
+-   the [ordered panel @lst-p0]{style="color: #F8766D"}, controlled at a more stringent criterion of per-signature false positive of `<=0/31`, has 
+    -   lower sensitivity, assuming the same number of variant-signatures selected (@fig-oc_panellist);  
     -   lower panel-wise non-specificity (@fig-roc_panellist);
--   the [ordered panel @lst-x2]{style="color: #00BFC4"} and [ordered panel @lst-x3]{style="color: #C77CFF"}, controlled at less stringent criteria of per-collection false positive of `<=2/31` and `<=3/31`, respectively, have 
-    -   almost identical sensitivity, assuming the same number of variant-collections selected (@fig-oc_panellist);
+-   the [ordered panel @lst-p2]{style="color: #00BFC4"} and [ordered panel @lst-p3]{style="color: #C77CFF"}, controlled at less stringent criteria of per-signature false positive of `<=2/31` and `<=3/31`, respectively, have 
+    -   almost identical sensitivity, assuming the same number of variant-signatures selected (@fig-oc_panellist);
     -   higher panel-wise non-specificity (@fig-roc_panellist).
 
 ```{r}
@@ -288,18 +323,19 @@ z |>
   autoplot(which = 'roc')
 ```
 
-## Selected Collections
+<!--
+## Selected Signatures
 
-
-The `S3` method `as_flextable.panellist()` (@lst-flextable_panellist) displays the variant-collections selected in each ordered panel of the panel-list @lst-panellist.  The variant-collections that contain more than one variants are highlighted using the [light-yellow]{style="background-color: lightyellow"} color.
+@lst-flextable_panellist displays the variant-signatures selected in each ordered panel of the panel-list @lst-panellist.  The variant-signatures that contain more than one variants are highlighted using the [light-yellow]{style="background-color: lightyellow"} color.
 
 ```{r}
 #| lst-label: lst-flextable_panellist
-#| lst-cap: 'Variant-collections in each ordered panel of the panel-list @lst-panellist'
+#| lst-cap: 'Variant-signatures in each ordered panel of the panel-list @lst-panellist'
 z |> 
   as_flextable()
 ```
 
+-->
 
 # Appendix
 
@@ -330,18 +366,18 @@ Package **`minPanel`** `Imports` packages
 
 The function `panel()` (@sec-panel) returns an object of `S4` class `'panel'`, with `slot`s
 
--   `@m1`, a `logical` `matrix`, collections on rows and positive subjects on columns
--   `@m0`, a `logical` `matrix`, collections on rows and negative subjects on columns
--   `@id`, a `list` of `character` `vector`s.  Each `character` `vector` contains the variants in a collection. 
+-   `@m1`, a `logical` `matrix`, signatures on rows and positive subjects on columns
+-   `@m0`, a `logical` `matrix`, signatures on rows and negative subjects on columns
+-   `@id`, a `list` of `character` `vector`s.  Each `character` `vector` contains the variants in a signature. 
 -   `@label`, an optional `character` scalar
 
-The `S4` method of `show` to `signature = 'panel'` prints the vital information, e.g., the number of collections, and the number of positive and negative subjects.
+The `S4` method of `show` to `signature = 'panel'` prints the vital information, e.g., the number of signatures, and the number of positive and negative subjects.
 
 ### (Cumulative) True & False Positives {#sec-positive}
 
-The function `sum1()` finds the number of true positives per collection, i.e., the `rowSums` of the slot `@m1`.
+The function `sum1()` finds the number of true positives per signature, i.e., the `rowSums` of the slot `@m1`.
 
-The function `sum0()` finds the number of false positives per collection, i.e., the `rowSums` of the slot `@m0`.
+The function `sum0()` finds the number of false positives per signature, i.e., the `rowSums` of the slot `@m0`.
 
 Functions `sum1()` and `sum0()` return 
 an `integer` `vector`.
@@ -351,9 +387,9 @@ an `integer` `vector`.
 ```
 
 
-The function `cumsum1()` finds the number of true positives, by a sub-panel of the first $i$ collections.
+The function `cumsum1()` finds the number of true positives, by a sub-panel of the first $i$ signatures.
 
-The function `cumsum0()` finds the number of false positives, by a sub-panel of the first $i$ collections.
+The function `cumsum0()` finds the number of false positives, by a sub-panel of the first $i$ signatures.
 
 The function `cumsum1()` and `cumsum0()` return
 a not-strictly increasing `integer` `vector`.
@@ -369,10 +405,10 @@ The `S3` method `subset.panel()` 🚧
 
 #### by Panel-Wise False Positives
 
-Panel *`x1`* in @sec-select-panel, controlled at `sum0 <= 1L` per collection, has a substantial panel-wise false positive rate
+Panel *`p1`* in @sec-select-panel, controlled at `sum0 <= 1L` per signature, has a substantial panel-wise false positive rate
 
 ```{r}
-x1
+p1
 ```
 
 User may impose an additional criterion of panel-wise false positive of 5 or less out of 31 negative subjects.
@@ -396,13 +432,13 @@ x1a
 
 ```{r}
 #| code-fold: true
-#| code-summary: '**Figure**: operating characteristics of *`x0`*, *`x1`* and *`x1a`*'
+#| code-summary: '**Figure**: operating characteristics of *`p0`*, *`p1`* and *`x1a`*'
 #| fig-height: 3
 #| fig-width: 6
 #| fig-align: left
 #| label: fig-panel-a
-#| fig-cap: 'Operating characteristics of *`x0`*, *`x1`* and *`x1a`*'
-panellist(x0, x1, x1a) |>
+#| fig-cap: 'Operating characteristics of *`p0`*, *`p1`* and *`x1a`*'
+panellist(p0, p1, x1a) |>
   autoplot()
 ```
 
@@ -430,11 +466,11 @@ Examples using function `consort.panel()` are provided in @sec-select-panel.
 
 The function `consort.panellist()` organizes the CONSORT diagrams of each `panel` member in a `panellist` in a collage, using packages **`consort`** [@consort] and **`patchwork`** [@patchwork].  
 
-@fig-consort presents side-by-side the selection of collections in *`x0`*, *`x1`*, and *`x2`*.
+@fig-consort presents side-by-side the selection of signatures in *`p0`*, *`p1`*, and *`p2`*.
 
 ```{r}
 #| code-fold: true
-#| code-summary: '**Figure**: CONSORT diagrams of *`x0`*, *`x1`*, and *`x2`*'
+#| code-summary: '**Figure**: CONSORT diagrams of *`p0`*, *`p1`*, and *`p2`*'
 #| fig-height: 3.5
 #| fig-width: 10
 #| fig-align: left

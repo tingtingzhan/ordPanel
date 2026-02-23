@@ -92,9 +92,9 @@ autolayer.panellist <- function(
     geom_path(mapping = mp, linewidth = .3),
     scale_y_continuous(name = 'Sensitivity', labels = label_percent(), limits = c(0, 1)),
     switch(which, oc = {
-      scale_x_continuous(name = 'Number of Collections per Ordered Panel')
+      scale_x_continuous(name = 'Number of Signatures per Ordered Panel')
     }, roc = {
-      scale_x_continuous(name = '1 - Sensitivity', labels = label_percent(), limits = c(0, 1))
+      scale_x_continuous(name = '1 - Specificity', labels = label_percent(), limits = c(0, 1))
     }),
     scale_color_discrete(name = 'Ordered Panels', labels = .label)
   )
@@ -117,21 +117,17 @@ autolayer.panellist <- function(
 
 
 
-#' @title as_flextable.panellist
+#' @title Convert a [panellist] into \link[flextable]{flextable}
 #' 
 #' @param x a [panellist]
-#' 
-# @param orig.panel \linkS4class{panel} - must remove!!!
 #' 
 #' @param ... ..
 #' 
 #' @keywords internal
-#' @importFrom flextable as_flextable flextable autofit color align add_header_row merge_v bold hline highlight
 #' @importFrom scales pal_hue
-#' @importFrom stats setNames
 #' @export as_flextable.panellist
 #' @export
-as_flextable.panellist <- function(x, ...) { # orig.panel, 
+as_flextable.panellist <- function(x, ...) {
   
   nx <- length(x)
   
@@ -159,36 +155,51 @@ as_flextable.panellist <- function(x, ...) { # orig.panel,
     lengths(use.names = FALSE) 
   
   nvr <- v |> 
-    lengths(use.names = FALSE) # multiple variants per collection
+    lengths(use.names = FALSE) # multiple variants per signature
   
-  m1. <- mapply(FUN = \(x, v) {
-    x@m1[v, , drop = FALSE]
-  }, x = x, v = diff_v, SIMPLIFY = FALSE) |>
+  m1. <- mapply(
+    FUN = \(x, v) {
+      x@m1[v, , drop = FALSE]
+    }, 
+    x = x, v = diff_v, 
+    SIMPLIFY = FALSE
+  ) |>
     do.call(what = rbind, args = _)
   
-  m0. <- mapply(FUN = \(x, v) {
-    x@m0[v, , drop = FALSE]
-  }, x = x, v = diff_v, SIMPLIFY = FALSE) |>
+  m0. <- mapply(
+    FUN = \(x, v) {
+      x@m0[v, , drop = FALSE]
+    }, 
+    x = x, v = diff_v, 
+    SIMPLIFY = FALSE
+  ) |>
     do.call(what = rbind, args = _)
   
   d <- data.frame(
-    'Variant-Collection' = v |> names(),
+    'Variant-Signature' = v |> names(),
     'True(+)' = sprintf(fmt = '%d/%d', rowSums(m1.), ncol(m1.)),
     'False(+)' = sprintf(fmt = '%d/%d', rowSums(m0.), ncol(m0.)),
-    'Variants in Collection' = v |>
+    'Variants in Signature' = v |>
       vapply(FUN = paste, collapse = '\n', FUN.VALUE = NA_character_),
     check.names = FALSE
   )
   
   tmp <- x |>
-    setNames(nm = x |> vapply(FUN = \(i) {
-      sprintf(fmt = '%s\nsize=%d', i@label, nrow(i@m1))
-    }, FUN.VALUE = '')) |>
-    mapply(FUN = \(x, vs) {
-      ifelse(test = names(v) %in% names(vs), 
-             yes = x@label,
-             no = '')
-    }, x = _, vs = vs, SIMPLIFY = FALSE) |>
+    setNames(
+      nm = x |> 
+        vapply(FUN = \(i) {
+          sprintf(fmt = '%s\nsize=%d', i@label, nrow(i@m1))
+        }, FUN.VALUE = '')
+    ) |>
+    mapply(
+      FUN = \(x, vs) {
+        ifelse(
+          test = names(v) %in% names(vs), 
+          yes = x@label,
+          no = ''
+        )
+      }, x = _, vs = vs, SIMPLIFY = FALSE
+    ) |>
     as.data.frame.list(check.names = FALSE)
   
   data.frame(
@@ -202,7 +213,7 @@ as_flextable.panellist <- function(x, ...) { # orig.panel,
     highlight(i = (nvr > 1L), j = length(d), color = 'lightyellow') |>
     align(align = 'right', part = 'all') |>
     add_header_row(
-      values = c('Variant-Collection', 'Individual', 'Variants in Collection', 'Panel'), 
+      values = c('Variant-Signature', 'Individual', 'Variants in Signature', 'Ordered Panel'), 
       colwidths = c(1L, 2L, 1L, length(tmp)), 
       top = TRUE) |> 
     merge_v(part = 'header') |>

@@ -4,8 +4,10 @@
 #' @keywords internal
 #' 
 #' @import methods
+#' @import stats
 #' 
 #' @import cli
+#' @import flextable
 #' @import ggplot2
 #' @import patchwork
 '_PACKAGE'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/panellist.R
 \name{as_flextable.panellist}
 \alias{as_flextable.panellist}
-\title{as_flextable.panellist}
+\title{Convert a \link{panellist} into \link[flextable]{flextable}}
 \usage{
 \method{as_flextable}{panellist}(x, ...)
 }
@@ -12,6 +12,6 @@
 \item{...}{..}
 }
 \description{
-as_flextable.panellist
+Convert a \link{panellist} into \link[flextable]{flextable}
 }
 \keyword{internal}

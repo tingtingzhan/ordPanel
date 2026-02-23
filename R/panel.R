@@ -62,7 +62,7 @@ panel <- function(m1, m0) {
   names(id) <- id |> 
     seq_along() |>
     format(justify = 'right') |>
-    sprintf(fmt = 'Collection %s')
+    sprintf(fmt = 'Signature %s')
   
   m1o <- m1[uid, , drop = FALSE]
   m0o <- m0[uid, , drop = FALSE]
@@ -93,7 +93,7 @@ setMethod(f = show, signature = 'panel', definition = \(object) {
   }
   
   sprintf(
-    fmt = 'Panel of %s Variant-Collections from\n',
+    fmt = 'Panel of %s Variant-Signatures from\n',
     object@m1 |> nrow() |> col_magenta()
   ) |> cat()
   sprintf(
@@ -106,6 +106,10 @@ setMethod(f = show, signature = 'panel', definition = \(object) {
     object@m0 |> ncol() |> col_blue(),
     'negative' |> col_green()
   ) |> cat()
+  
+  #object |>
+  #  as_flextable.panel() |>
+  #  print()
   
 })
 

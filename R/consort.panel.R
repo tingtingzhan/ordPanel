@@ -15,8 +15,8 @@ consort.panel <- function(x, ...) {
   cst <- x@consort
   nc <- length(cst)
   
-  ord <- rep('Collections', times = nc * 2 + 1L)
-  names(ord) <- rep('collection', times = length(ord))
+  ord <- rep('Signatures', times = nc * 2 + 1L)
+  names(ord) <- rep('signature', times = length(ord))
   side_id <- seq_len(nc) * 2
   ord[side_id] <- cst |> 
     vapply(FUN = attr, which = 'label', exact = TRUE, FUN.VALUE = '')
@@ -24,7 +24,7 @@ consort.panel <- function(x, ...) {
     names()
   
   data.frame(
-    collection = cst |> nrow() |> seq_len(),
+    signature = cst |> nrow() |> seq_len(),
     cst
   ) |>
     consort_plot(data = _, orders = ord, side_box = names(cst), ...)
