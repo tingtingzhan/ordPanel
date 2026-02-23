@@ -5,6 +5,7 @@
 #' 
 #' @import methods
 #' @import stats
+#' @import utils
 #' 
 #' @import cli
 #' @import flextable
