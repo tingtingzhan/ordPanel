@@ -7,12 +7,15 @@
 \usage{
 \method{autoplot}{panellist}(object, ...)
 
-\method{autolayer}{panellist}(object, ...)
+\method{autolayer}{panellist}(object, which = c("oc", "roc"), ...)
 }
 \arguments{
 \item{object}{a \link{panellist}}
 
 \item{...}{additional parameters, currently no use}
+
+\item{which}{\link[base]{character} scalar,
+\code{'oc'} (default) or (faux) \code{'roc'}}
 }
 \description{
 Visualize \link{panellist}

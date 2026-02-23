@@ -60,23 +60,23 @@ subset.panel <- function(x, subset, append.label = FALSE, ...) {
   
   e[[2L]] |>
     deparse1() |>
-    switch(EXPR = _, true_positive = {
-      e.[[2L]] <- call(name = 'true_positive', quote(x))
+    switch(EXPR = _, sum1 = {
+      e.[[2L]] <- call(name = 'sum1', quote(x))
       id <- eval(e.)
       .crit <- 'True(+)'
       .labs <- sprintf(fmt = 'True(+) %s%d/%d', c(.symbol, .inv_symbol), e.[[3L]], x@m1 |> ncol())
-    }, false_positive = {
-      e.[[2L]] <- call(name = 'false_positive', quote(x))
+    }, sum0 = {
+      e.[[2L]] <- call(name = 'sum0', quote(x))
       id <- eval(e.)
       .crit <- 'False(+)'
       .labs <- sprintf(fmt = 'False(+) %s%d/%d', c(.symbol, .inv_symbol), e.[[3L]], x@m0 |> ncol())
-    }, cum_false_positive = {
-      e.[[2L]] <- call(name = 'cum_false_positive', quote(x))
+    }, cumsum0 = {
+      e.[[2L]] <- call(name = 'cumsum0', quote(x))
       id <- eval(e.)
       .crit <- 'panelFalse(+)'
       .labs <- sprintf(fmt = 'panelFalse(+) %s%d/%d', c(.symbol, .inv_symbol), e.[[3L]], x@m0 |> ncol())
-    }, 'diff(cum_true_positive)' = {
-      e.[[2L]] <- call(name = 'diff', call(name = 'cum_true_positive', quote(x))) # cannot use native pipe!
+    }, 'diff(cumsum1)' = {
+      e.[[2L]] <- call(name = 'diff', call(name = 'cumsum1', quote(x))) # cannot use native pipe!
       id <- c(1L, which(eval(e.)) + 1L)
       .crit <- 'diffTrue(+)'
       .labs <- sprintf(fmt = 'diffTrue(+) %s%d/%d', c(.symbol, .inv_symbol), e.[[3L]], x@m1 |> ncol())

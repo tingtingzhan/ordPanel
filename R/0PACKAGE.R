@@ -2,8 +2,12 @@
 
 
 #' @keywords internal
-#' @import cli
+#' 
 #' @import methods
+#' 
+#' @import cli
+#' @import ggplot2
+#' @import patchwork
 '_PACKAGE'
 
 

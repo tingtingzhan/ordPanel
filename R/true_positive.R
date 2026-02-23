@@ -5,30 +5,30 @@
 #' @param x a \linkS4class{panel}
 #' 
 #' @returns
-#' Functions [true_positive()] and [false_positive()] return 
+#' Functions [sum1()] and [sum0()] return 
 #' a \link[base]{integer} \link[base]{vector}.
 #' 
-#' Function [cum_true_positive()] and [cum_false_positive()] return
+#' Function [cumsum1()] and [cumsum0()] return
 #' a (not strictly) increasing \link[base]{integer} \link[base]{vector}.
 #' 
 #' @keywords internal
-#' @name true_positive
+#' @name sum1
 #' @export
-true_positive <- function(x) {
+sum1 <- function(x) {
   x@m1 |>
     rowSums() # number of true positives, per variant
 }
 
-#' @rdname true_positive
+#' @rdname sum1
 #' @export
-false_positive <- function(x) {
+sum0 <- function(x) {
   x@m0 |> 
     rowSums() # number of false positives, per variant
 }
 
 
 #' @importFrom matrixStats colAnys
-.total_positive <- function(x) {
+.total_positive <- \(x) {
   # `x` is a \link[base]{logical} \link[base]{matrix}
   x |> 
     colAnys() |>
@@ -36,7 +36,7 @@ false_positive <- function(x) {
 }
 
 
-.cum_positive <- function(x) {
+.cum_positive <- \(x) {
   # `x` is a \link[base]{logical} \link[base]{matrix}
   x |>
     nrow() |>
@@ -47,16 +47,16 @@ false_positive <- function(x) {
     }, FUN.VALUE = NA_integer_)
 }
 
-#' @rdname true_positive
+#' @rdname sum1
 #' @export
-cum_true_positive <- function(x) {
+cumsum1 <- function(x) {
   x@m1 |> 
     .cum_positive()
 }
 
-#' @rdname true_positive
+#' @rdname sum1
 #' @export
-cum_false_positive <- function(x) {
+cumsum0 <- function(x) {
   x@m0 |>
     .cum_positive()
 }

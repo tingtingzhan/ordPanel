@@ -34,7 +34,7 @@ To cite this methodology, please use @Zezulinski25.
 
 ## Prerequisite
 
-Package **`groupedHyperframe`** requires R version 4.5.0 (released 2025-04-11) or higher ([macOS](https://cran.r-project.org/bin/macosx/), [Windows](https://cran.r-project.org/bin/windows/base/), [Linux](https://cran.r-project.org/bin/linux/)).
+Package **`minPanel`** requires R version 4.5.0 (released 2025-04-11) or higher ([macOS](https://cran.r-project.org/bin/macosx/), [Windows](https://cran.r-project.org/bin/windows/base/), [Linux](https://cran.r-project.org/bin/linux/)).
 
 ```{r}
 #| code-fold: true
@@ -79,72 +79,79 @@ Study data should be described in a peer-reviewed manuscript in the following la
 
 Data from @Zezulinski25 is included in package **`minPanel`**.
 
-Data object *`m1`* is a `logical` `matrix` of `r nrow(m1)` variants in `r ncol(m1)` early & late stage, i.e., *positive*, patients.
+@lst-m1 shows that the data object *`m1`* is a `logical` `matrix` of `r nrow(m1)` variants in `r ncol(m1)` early & late stage, i.e., *positive*, patients.
 
 ```{r}
+#| lst-cap: 'Number of variants and positive patients'
+#| lst-label: lst-m1
 m1 |> 
   dim()
 ```
 
 ```{r}
+#| lst-cap: 'A snippet of `m1` (@lst-m1)'
+#| lst-label: lst-m1_head
 m1 |> 
   head(n = c(3L, 3L))
 ```
 
-Data object *`m0`* is a `logical` `matrix` of the same `r nrow(m0)` variants in `r ncol(m0)` UPC, i.e., *negative*, patients.
+@lst-m0 shows that the data object *`m0`* is a `logical` `matrix` of the same `r nrow(m0)` variants in `r ncol(m0)` UPC, i.e., *negative*, patients.
 
 ```{r}
+#| lst-cap: 'Number of variants and negative patients'
+#| lst-label: lst-m0
 m0 |> 
   dim()
 ```
 
 ```{r}
+#| lst-cap: 'A snippet of `m0` (@lst-m0)'
+#| lst-label: lst-m0_head
 m0 |> 
   head(n = c(3L, 3L))
 ```
 
 # Panel of Variant-Collections {#sec-panel}
 
-Function `panel()` identifies the variants that identifies the same set of positive subjects in *`m1`*, and the same set of negative subjects in *`m0`*.  These variants are considered identical in terms of *`m1`* and *`m0`*.  Therefore they are put in one **variant-collection**.  We use *"collection"* for short in this vignette.
+@lst-panel consolidates the variants that identify the same set of positive subjects in @lst-m1 and the same set of negative subjects in @lst-m0.  In other words, these variants are considered identical in terms of @lst-m1 and @lst-m0.  Therefore they are consolidated into one *variant-collection*.
 
 ```{r}
-m = panel(m1 = m1, m0 = m0)
+#| lst-label: lst-panel
+#| lst-cap: 'Variant collections'
+(m = panel(m1 = m1, m0 = m0))
 ```
 
-
-
-```{r}
-m
-```
-
-In other words, the `r nrow(m1)` variants in both *`m1`* and *`m0`* are consolidated into `r length(m@id)` collections.  For example, the variants below identify the same set of positive and negative subjects, thus they are consolidated as one collection.
+@lst-panel consolidates the `r nrow(m1)` variants in @lst-m1 and @lst-m0 into `r length(m@id)` variant-collections.  For example, the variants below (@lst-panel_eg) identify the same set of positive and negative subjects, thus they are consolidated as one collection.
 
 ```{r}
 #| code-fold: true
-#| code-summary: e.g., variants consolidated in one collection
+#| lst-label: lst-panel_eg
+#| lst-cap: 'e.g., variants consolidated in one variant-collection'
 m@id[[8L]] |>
   cat(sep = '\n')
 ```
 
 
-# Selected Ordered Panel {#sec-select-panel}
+# Ordered Panel {#sec-select-panel}
 
 Methodology should be described in a peer-reviewed manuscript in the following language.
 
-> A minimal panel of variants-collections is determined using the following steps: (1) we exclude the collections that identify none of the `<positive.subjects>` *per collection*; (2) we exclude the collections that identify at least `1` of the `<negative.subjects>` *per collection*; (3) we sort the remaining collections by the number of `<positive.subjects>` identified *per collection*, from most to least; (4) we exclude  the collections that identify no more `<positive.subjects>` than all the preceding collections.  Such panel of collections is ***ordered***, i.e., a researcher may reduce the size of the panel by keeping the collections in the top of the panel and dropping those in the bottom of the panel.  `<Figure>` is the Consolidated Standards of Reporting Trials (CONSORT) diagram of this selection procedure. This methodology is implemented in R (@R) package **`minPanel`** (citation coming soon).
+> An *ordered panel* of variant-collections is determined using the following steps: (1) we exclude the collections that identify none of the `<positive.subjects>` *per collection*; (2) we exclude the collections that identify `1`-or-more `<negative.subjects>` *per collection*; (3) we sort the remaining collections by the number of `<positive.subjects>` identified *per collection*, from most to least; (4) we exclude  the collections that identify no more `<positive.subjects>` than all the preceding collections.  Such panel of collections is ***ordered***, i.e., a researcher may reduce the size of the panel by keeping the collections in the top of the panel and dropping those in the bottom of the panel.  `<Figure>` is the Consolidated Standards of Reporting Trials (CONSORT) diagram of this selection procedure. This methodology is implemented in R (@R) package **`minPanel`** (citation coming soon).
 
 
 ```{r}
+#| lst-label: lst-x0_create
+#| lst-cap: 'Ordered panel *`x0`*: controlled at `0`-or-less `False(+)` per collection'
 x0 = m |>
-  subset(subset = true_positive > 0L) |>
-  subset(subset = false_positive <= 0L, append.label = TRUE) |>
-  sort_by(y = ~ true_positive, decreasing = TRUE) |>
-  subset(subset = diff(cum_true_positive) > 0L) |>
-  append_label(info = 'cum_false_positive')
+  subset(subset = sum1 > 0L) |>
+  subset(subset = sum0 <= 0L, append.label = TRUE) |>
+  sort_by(y = ~ sum1, decreasing = TRUE) |>
+  subset(subset = diff(cumsum1) > 0L) |>
+  append_label(info = 'cumsum0')
 ```
 
 
-The pipeline above consists of five steps.
+The pipeline @lst-x0 consists of five steps.
 
 1. The first call to `subset()` (Appendix @sec-subset) selects the collections that identify at least one positive subjects *per collection* (Appendix @sec-positive).
 2. The second call to `subset()` selects the collections that identify none of the negative subjects *per collection* (Appendix @sec-positive).  The [*per-collection* criterion]{style="background-color: #FFFF00"} *`'False(+) ≤0/31'`* is `append`ed to the `@label` of the output.
@@ -154,71 +161,66 @@ The pipeline above consists of five steps.
 
 
 ```{r}
+#| lst-label: lst-x0
+#| lst-cap: 'Ordered panel *`x0`*: controlled at `0`-or-less `False(+)` per collection'
 x0
 ```
 
-Function `consort.panel()` (Appendix @sec-consort_panel) presents a Consolidated Standards of Reporting Trials (CONSORT) diagram of the creation of a selected panel.  @fig-consort0 shows the creation of *`x0`*.
+@fig-consort0 (@lst-consort_panel) presents a Consolidated Standards of Reporting Trials (CONSORT) diagram of the creation of the ordered panel @lst-x0.
+
+
 
 ```{r}
+#| lst-label: lst-consort_panel
+#| lst-cap: 'CONSORT Diagram of ordered panel @lst-x0'
 #| fig-height: 2.5
 #| fig-width: 5
 #| fig-align: left
-#| fig-cap: 'CONSORT Diagram of *`x0`*'
+#| fig-cap: 'CONSORT Diagram of ordered panel @lst-x0'
 #| label: fig-consort0
 x0 |>
   consort.panel()
 ```
 
 
-Similarly, we relax the constraint on `false_positive`-per-collection and create
+Similarly, we relax the constraint on `False(+)`-per-collection and create @lst-x1 - @lst-x3.
 
 ```{r}
-#| code-fold: true
-#| code-summary: 'A `panel` *`x1`*: controlled at `false_positive <= 1L` per collection'
+#| lst-label: lst-x1
+#| lst-cap: 'Ordered panel *`x1`*: controlled at `1`-or-less `False(+)` per collection'
 x1 = m |>
-  subset(subset = true_positive > 0L) |>
-  subset(subset = false_positive <= 1L, append.label = TRUE) |>
-  sort_by(y = ~ true_positive, decreasing = TRUE) |>
-  subset(subset = diff(cum_true_positive) > 0L) |>
-  append_label(info = 'cum_false_positive')
-```
-
-```{r}
+  subset(subset = sum1 > 0L) |>
+  subset(subset = sum0 <= 1L, append.label = TRUE) |>
+  sort_by(y = ~ sum1, decreasing = TRUE) |>
+  subset(subset = diff(cumsum1) > 0L) |>
+  append_label(info = 'cumsum0')
 x1
 ```
 
 
 ```{r}
-#| code-fold: true
-#| code-summary: 'A `panel` *`x2`*: controlled at `false_positive <= 2L` per collection'
+#| lst-label: lst-x2
+#| lst-cap: 'Ordered panel *`x2`*: controlled at `2`-or-less `False(+)` per collection'
 x2 = m |>
-  subset(subset = true_positive > 0L) |>
-  subset(subset = false_positive <= 2L, append.label = TRUE) |>
-  sort_by(y = ~ true_positive, decreasing = TRUE) |>
-  subset(subset = diff(cum_true_positive) > 0L) |>
-  append_label(info = 'cum_false_positive')
+  subset(subset = sum1 > 0L) |>
+  subset(subset = sum0 <= 2L, append.label = TRUE) |>
+  sort_by(y = ~ sum1, decreasing = TRUE) |>
+  subset(subset = diff(cumsum1) > 0L) |>
+  append_label(info = 'cumsum0')
 x2
 ```
 
 
-```{r}
-x2
-```
-
 
 ```{r}
-#| code-fold: true
-#| code-summary: 'A `panel` *`x3`*: controlled at `false_positive <= 3L` per collection'
+#| lst-label: lst-x3
+#| lst-cap: 'Ordered panel *`x3`*: controlled at `3`-or-less `False(+)` per collection'
 x3 = m |>
-  subset(subset = true_positive > 0L) |>
-  subset(subset = false_positive <= 3L, append.label = TRUE) |>
-  sort_by(y = ~ true_positive, decreasing = TRUE) |>
-  subset(subset = diff(cum_true_positive) > 0L) |>
-  append_label(info = 'cum_false_positive')
-x3
-```
-
-```{r}
+  subset(subset = sum1 > 0L) |>
+  subset(subset = sum0 <= 3L, append.label = TRUE) |>
+  sort_by(y = ~ sum1, decreasing = TRUE) |>
+  subset(subset = diff(cumsum1) > 0L) |>
+  append_label(info = 'cumsum0')
 x3
 ```
 
@@ -226,51 +228,74 @@ x3
 
 # Operating Characteristics
 
-Function `panellist()` collects multiple `panel`s.
+@lst-panellist collects multiple ordered panels.
 
 ```{r}
-z = panellist(x0, x1, x2, x3)
+#| lst-label: lst-panellist
+#| lst-cap: 'Ordered panel list containing @lst-x0 - @lst-x3'
+(z = panellist(x0, x1, x2, x3))
 ```
 
-The `S3` method dispatch `base::print.listof()` displays a `panellist`.
-
-```{r}
-#| code-fold: true
-#| code-summary: 'A `panellist` *`z`*'
-z
-```
 
 
 ## Visualization
 
 The operating characteristics should be described in a peer-reviewed manuscript in the following language.
 
-> `<Figure>` presents the operating characteristics of multiple ordered-panels of variants-collections.  The $x$-axis is the number of collections from the top of each ordered-panel.  The $y$-axis is the percentage of `<positive.subjects>` identified.  An operating characteristics curve moves towards the upper-left corner to indicate a better performance, i.e., higer percentage of `<positive.subjects>` identified with lower number of collections in the ordered-panel. Investigators should evaluate multiple operating characteristics curves by their control on number of `<false.subjects>` identified.
-
-
-The `S3` method dispatches `autoplot.panellist()` and `autolayer.panellist()` visualize the operating characteristics of panels *`x0`*, *`x1`*, *`x2`* and *`x3`* in @fig-panellist.  
-
-@fig-panellist concludes that the panel *`x1`*, controlled at per-collection false positive of `<=1/31` (colored [**green**]{style="color: #7CAE00"}), is the optimal among the four panels, as
-
--   Panel *`x0`*, controlled at a more stringent criterion of per-collection false positive of `<=0/31`, detects substantially less true-positives.  In other words, compared to panel *`x1`*, panel *`x0`* loses substantial power to detect true-positive due to a more stringent control of false-positive.
--   Panels *`x2`* and *`x3`*, controlled at less stringent criteria of per-collection false positive of `<=2/31` and `<=3/31`, respectively, have almost identical operating characteristics as panel *`x1`*.  In other words, compared to panel *`x1`*, panels *`x2`* and *`x3`* have no improvement on detection of true-positive, at the cost of higher false-positive.
+> `<Figure_oc>` presents the operating characteristic curves of multiple ordered panels of variant-collections.  The $x$-axis is the number of variant-collections that are selected from each ordered panel by the investigator.  The $y$-axis is the percentage of `<positive.subjects>` identified, i.e., the sensitivity, for each selected number of variant-collections.  An operating characteristics curve moves towards the upper-left corner to indicate a better performance, i.e., higer sensitivity with lower number of variant-collections selected from the ordered panel. 
+>
+> `<Figure_roc>` presents the *pseudo* receiver operating characteristic (ROC) curves of multiple ordered panels of variant-collections. The $x$-axis is the non-specificity for each selected number of variant-collections.  The $y$-axis is the percentage of `<positive.subjects>` identified, i.e., the sensitivity, for each selected number of variant-collections. 
+This is a *pseudo* ROC curve, as each sensitivity-non-specificity pair on this curve corresponds to a different selected number of variant-collections.
 
 ```{r}
+#| echo: false
+#| eval: false
+scales::pal_hue()(n = 4L)
+```
+
+@fig-oc_panellist (@lst-oc_panellist) and @fig-roc_panellist (@lst-roc_panellist) visualize the operating characteristic and the  *pseudo* receiver operating characteristic curves of the panel-list @lst-panellist.  It is concluded that the [**ordered panel @lst-x1**]{style="color: #7CAE00"}, controlled at a per-collection false positive of `<=1/31`, is the optimal among the four ordered panels.  
+
+Compared to the [**ordered panel @lst-x1**]{style="color: #7CAE00"},
+
+-   the [ordered panel @lst-x0]{style="color: #F8766D"}, controlled at a more stringent criterion of per-collection false positive of `<=0/31`, has 
+    -   lower sensitivity, assuming the same number of variant-collections selected (@fig-oc_panellist);  
+    -   lower panel-wise non-specificity (@fig-roc_panellist);
+-   the [ordered panel @lst-x2]{style="color: #00BFC4"} and [ordered panel @lst-x3]{style="color: #C77CFF"}, controlled at less stringent criteria of per-collection false positive of `<=2/31` and `<=3/31`, respectively, have 
+    -   almost identical sensitivity, assuming the same number of variant-collections selected (@fig-oc_panellist);
+    -   higher panel-wise non-specificity (@fig-roc_panellist).
+
+```{r}
+#| lst-label: lst-oc_panellist
+#| lst-cap: 'Operating characteristics of ordered panel list @lst-panellist'
 #| fig-height: 3
 #| fig-width: 6
 #| fig-align: left
-#| fig-cap: 'Operating characteristics of `panellist` *`z`*'
-#| label: fig-panellist
+#| fig-cap: 'Operating Characteristics of Ordered Panel List @lst-panellist'
+#| label: fig-oc_panellist
 z |> 
   autoplot()
+```
+
+```{r}
+#| lst-label: lst-roc_panellist
+#| lst-cap: 'Pseudo receiver operating characteristics of ordered panel list @lst-panellist'
+#| fig-height: 3
+#| fig-width: 6
+#| fig-align: left
+#| fig-cap: 'Pseudo Receiver Operating Characteristics of Ordered Panel List @lst-panellist'
+#| label: fig-roc_panellist
+z |> 
+  autoplot(which = 'roc')
 ```
 
 ## Selected Collections
 
 
-The `S3` method dispatch `as_flextable.panellist()` displays the collections selected in each `panel`.  The collections that contain more than one variants are highlighted using the [light-yellow]{style="background-color: lightyellow"} color.
+The `S3` method `as_flextable.panellist()` (@lst-flextable_panellist) displays the variant-collections selected in each ordered panel of the panel-list @lst-panellist.  The variant-collections that contain more than one variants are highlighted using the [light-yellow]{style="background-color: lightyellow"} color.
 
 ```{r}
+#| lst-label: lst-flextable_panellist
+#| lst-cap: 'Variant-collections in each ordered panel of the panel-list @lst-panellist'
 z |> 
   as_flextable()
 ```
@@ -297,28 +322,28 @@ Package **`minPanel`** `Imports` packages
 -   **`flextable`** [@flextable, v`r packageVersion('flextable')`], for flexible table
 -   **`ggplot2`** [@ggplot2], **`patchwork`** [@patchwork], for visualization
 -   `r '\U1f5dd'` **`matrixStats`** [@matrixStats, v`r packageVersion('matrixStats')`], key dependency, for matrix algebra
--   `r '\U1f5dd'` **`methods`** shipped with vanilla `r R.version.string`, key dependencies, for `S4` generic function and method dispatches
+-   `r '\U1f5dd'` **`methods`** shipped with vanilla `r R.version.string`, key dependencies, for `S4` generic function and methodes
 -   **`scales`** [@scales, v`r packageVersion('scales')`], for colour pallet
 
 
 ## `panel`
 
-Function `panel()` (@sec-panel) returns an object of `S4` class `'panel'`, with `slot`s
+The function `panel()` (@sec-panel) returns an object of `S4` class `'panel'`, with `slot`s
 
 -   `@m1`, a `logical` `matrix`, collections on rows and positive subjects on columns
 -   `@m0`, a `logical` `matrix`, collections on rows and negative subjects on columns
 -   `@id`, a `list` of `character` `vector`s.  Each `character` `vector` contains the variants in a collection. 
 -   `@label`, an optional `character` scalar
 
-The `S4` method dispatch of `show` to `signature = 'panel'` prints the vital information, e.g., the number of collections, and the number of positive and negative subjects.
+The `S4` method of `show` to `signature = 'panel'` prints the vital information, e.g., the number of collections, and the number of positive and negative subjects.
 
 ### (Cumulative) True & False Positives {#sec-positive}
 
-Function `true_positive()` finds the number of true positives per collection, i.e., the `rowSums` of the slot `@m1`.
+The function `sum1()` finds the number of true positives per collection, i.e., the `rowSums` of the slot `@m1`.
 
-Function `false_positive()` finds the number of false positives per collection, i.e., the `rowSums` of the slot `@m0`.
+The function `sum0()` finds the number of false positives per collection, i.e., the `rowSums` of the slot `@m0`.
 
-Functions `true_positive()` and `false_positive()` return 
+Functions `sum1()` and `sum0()` return 
 an `integer` `vector`.
  
 ```{r}
@@ -326,11 +351,11 @@ an `integer` `vector`.
 ```
 
 
-Function `cum_true_positive()` finds the number of true positives, by a sub-panel of the first $i$ collections.
+The function `cumsum1()` finds the number of true positives, by a sub-panel of the first $i$ collections.
 
-Function `cum_false_positive()` finds the number of false positives, by a sub-panel of the first $i$ collections.
+The function `cumsum0()` finds the number of false positives, by a sub-panel of the first $i$ collections.
 
-Function `cum_true_positive()` and `cum_false_positive()` return
+The function `cumsum1()` and `cumsum0()` return
 a not-strictly increasing `integer` `vector`.
 
 ```{r}
@@ -340,11 +365,11 @@ a not-strictly increasing `integer` `vector`.
 
 ### Subset {#sec-subset}  
 
-The `S3` method dispatch `subset.panel()` 🚧
+The `S3` method `subset.panel()` 🚧
 
 #### by Panel-Wise False Positives
 
-Panel *`x1`* in @sec-select-panel, controlled at `false_positive <= 1L` per collection, has a substantial panel-wise false positive rate
+Panel *`x1`* in @sec-select-panel, controlled at `sum0 <= 1L` per collection, has a substantial panel-wise false positive rate
 
 ```{r}
 x1
@@ -356,11 +381,11 @@ User may impose an additional criterion of panel-wise false positive of 5 or les
 #| code-fold: true
 #| code-summary: '**Example**: additional criteria of panel-wise false positive `<=5`'
 x1a = m |>
-  subset(subset = true_positive > 0L) |>
-  subset(subset = false_positive <= 1L, append.label = TRUE) |>
-  sort_by(y = ~ true_positive, decreasing = TRUE) |>
-  subset(subset = diff(cum_true_positive) > 0L) |>
-  subset(subset = cum_false_positive <= 5L, append.label = TRUE)
+  subset(subset = sum1 > 0L) |>
+  subset(subset = sum0 <= 1L, append.label = TRUE) |>
+  sort_by(y = ~ sum1, decreasing = TRUE) |>
+  subset(subset = diff(cumsum1) > 0L) |>
+  subset(subset = cumsum0 <= 5L, append.label = TRUE)
 ```
 
 ```{r}
@@ -384,18 +409,18 @@ panellist(x0, x1, x1a) |>
 
 ### Sort-By {#sec-sortby}
 
-The `S3` method dispatch `sort_by.panel()` 🚧
+The `S3` method `sort_by.panel()` 🚧
 
 ### Append Label {#sec-appendlabel}
 
-Function `append_label()` 🚧
+The function `append_label()` 🚧
 
 ### CONSORT Diagram {#sec-consort_panel}
 
 
-Function `consort.panel()` creates a CONSORT diagram of the creation of a `panel`, using package **`consort`** [@consort].  
+The function `consort.panel()` creates a CONSORT diagram of the creation of a `panel`, using package **`consort`** [@consort].  
 
-Function `consort.panel()` is a wrapper of the function `consort::consort_plot()`, which returns an object of class `'consort'`.
+The function `consort.panel()` is a wrapper of the function `consort::consort_plot()`, which returns an object of class `'consort'`.
 
 Examples using function `consort.panel()` are provided in @sec-select-panel.
 
@@ -403,7 +428,7 @@ Examples using function `consort.panel()` are provided in @sec-select-panel.
 
 ### CONSORT Diagram {#sec-consort_panellist}
 
-Function `consort.panellist()` organizes the CONSORT diagrams of each `panel` member in a `panellist` in a collage, using packages **`consort`** [@consort] and **`patchwork`** [@patchwork].  
+The function `consort.panellist()` organizes the CONSORT diagrams of each `panel` member in a `panellist` in a collage, using packages **`consort`** [@consort] and **`patchwork`** [@patchwork].  
 
 @fig-consort presents side-by-side the selection of collections in *`x0`*, *`x1`*, and *`x2`*.
 
@@ -431,7 +456,7 @@ too difficult to parse..
 ```{r}
 #| eval: false
 m |> 
-  subset.panel(subset = (true_positive > 0L) & (false_positive <= 3L))
+  subset.panel(subset = (sum1 > 0L) & (sum0 <= 3L))
 ```
 
 
@@ -448,79 +473,7 @@ R terminology and nomenclature could be *drastically different* from that of mat
 
 | Term / Abbreviation | Description |
 |:-----------------------------------|:-----------------------------------|
-| CRAN, R | The Comprehensive R Archive Network, <https://cran.r-project.org> |
-| `Depends`, `Imports`, `Suggests`, `Enhances` | [*Writing R Extensions*, Section 1.1.3 *Package Dependencies*](https://cran.r-project.org/doc/manuals/r-devel/R-exts.html#Package-Dependencies) |
-| [`|>`](https://search.r-project.org/R/refmans/base/html/pipeOp.html) | Forward pipe operator introduced since R version 4.1.0 |
-| [`~`](https://search.r-project.org/R/refmans/base/html/tilde.html) | Tilde operator, to separate the left- and right-hand sides in a `formula` |
-| `.` | Dot symbol, to denote the remaining variables contained in a [`data.frame`](https://search.r-project.org/R/refmans/base/html/data.frame.html). See [`formula`](https://search.r-project.org/R/refmans/stats/html/formula.html) and [`terms.formula`](https://search.r-project.org/R/refmans/stats/html/terms.formula.html) for details. |
-| [`:`](https://search.r-project.org/R/refmans/base/html/Colon.html) | Colon operator for [`interaction`](https://search.r-project.org/R/refmans/base/html/interaction.html) of [`factor`](https://search.r-project.org/R/refmans/base/html/factor.html)s, see section *Details* of [`formula`](https://search.r-project.org/R/refmans/stats/html/formula.html) documentation |
-| `/` | Forward slash operator for nested grouping structure, see section *Details* of [`formula`](https://search.r-project.org/R/refmans/stats/html/formula.html) documentation |
-| [`::`, `:::`](https://search.r-project.org/R/refmans/base/html/ns-dblcolon.html) | Double and triple colon operators, explicitly-[namespace](https://search.r-project.org/R/refmans/base/html/ns-reflect.html)d function or object |
-| [`args`](https://search.r-project.org/R/refmans/base/html/args.html) | Argument list of a [`function`](https://search.r-project.org/R/refmans/base/html/function.html) |
-| [`attr`](https://search.r-project.org/R/refmans/base/html/attr.html), [`attributes`](https://search.r-project.org/R/refmans/base/html/attributes.html) | Attributes |
-| [`body`](https://search.r-project.org/R/refmans/base/html/body.html) | Body of a [`function`](https://search.r-project.org/R/refmans/base/html/function.html) |
-| [`data.frame`](https://search.r-project.org/R/refmans/base/html/data.frame.html) | Data frame |
-| [`.Deprecated`](https://search.r-project.org/R/refmans/base/html/Deprecated.html), [`.Defunct`](https://search.r-project.org/R/refmans/base/html/Defunct.html) | R function retirement |
-| [`deparse`, `deparse1`](https://search.r-project.org/R/refmans/base/html/deparse.html) | Expression deparsing, i.e., turn unevaluated expressions into `character` scalar or `vector` |
-| [`diag`](https://search.r-project.org/R/refmans/base/html/diag.html) | Matrix diagonals |
-| [`environment`](https://search.r-project.org/R/refmans/base/html/environment.html), [`as.environment`](https://search.r-project.org/R/refmans/base/html/as.environment.html) | (Coerce to an) environment |
-| [`eval`](https://search.r-project.org/R/refmans/base/html/eval.html) | Evaluate an R `expression` |
-| [`export`](https://cran.r-project.org/web/packages/roxygen2/vignettes/namespace.html) | Export tags in [NAMESPACE](https://bookdown.dongzhuoer.com/hadley/r-pkgs/namespace) |
-| [`expression`](https://search.r-project.org/R/refmans/base/html/expression.html) | Unevaluated expressions |
-| [`factor`](https://search.r-project.org/R/refmans/base/html/factor.html) | Categorical object, a.k.a., factor |
-| [`file.size`](https://search.r-project.org/R/refmans/base/html/file.info.html) | File size in bytes |
-| (one-sided) [`formula`](https://search.r-project.org/R/refmans/stats/html/formula.html) | Formula, or [one-sided formula](https://search.r-project.org/R/refmans/stats/html/asOneSidedFormula.html) |
-| `foobar` | Placeholder; <https://en.wikipedia.org/wiki/Foobar> |
-| [`formals`](https://search.r-project.org/R/refmans/base/html/formals.html) | Formal arguments of R function |
-| [`function`](https://search.r-project.org/R/refmans/base/html/function.html) | R function definition |
-| [`ggplot`](https://search.r-project.org/CRAN/refmans/ggplot2/html/ggplot.html) | Elegant data visualisations using the grammar-of-graphics, from package **`ggplot2`** [@ggplot2] |
-| [`identical`](https://search.r-project.org/R/refmans/base/html/identical.html) | Exact equality in R |
-| [`inherits`](https://search.r-project.org/R/refmans/base/html/class.html) | Class inheritance |
-| [`Inf`, `is.finite`](https://search.r-project.org/R/refmans/base/html/is.finite.html) | Positive infinity $\infty$ |
-| [`kable`](https://search.r-project.org/CRAN/refmans/knitr/html/kable.html) | Tables in LaTeX, HTML, markdown and reStructuredText, from package **`knitr`** [@knitr] |
-| [`language`](https://search.r-project.org/R/refmans/base/html/is.language.html) | R language object |
-| [`length`](https://search.r-project.org/R/refmans/base/html/length.html) | Length of an object |
-| [`lengths`](https://search.r-project.org/R/refmans/base/html/lengths.html) | Lengths of `list` or `vector` elements |
-| [`library`](https://search.r-project.org/R/refmans/base/html/library.html) | Loading/attaching packages |
-| [`list`](https://search.r-project.org/R/refmans/base/html/list.html), [`listof`](https://search.r-project.org/R/refmans/stats/html/listof.html) | Lists of objects |
-| [`list2env`](https://search.r-project.org/R/refmans/stats/html/list2env.html) | Create an `environment` containing all `list` components as objects |
-| [`log`, `log1p`, `log2`, `log10`](https://search.r-project.org/R/refmans/base/html/Log.html) | $\log(x)$ and $\log(x+1)$ transformations |
-| [`.Machine`](https://search.r-project.org/R/refmans/base/html/zMachine.html) | Numerical characteristics of the machine R is running on, e.g., 32-bit integers and IEC 60559 floating-point (double precision) arithmetic |
-| [`match`](https://search.r-project.org/R/refmans/base/html/match.html) | Value matching |
-| [`matrix`](https://search.r-project.org/R/refmans/base/html/matrix.html) | Matrices |
-| [`merge`, `merge.data.frame`](https://search.r-project.org/R/refmans/base/html/merge.html) | Merge two `data.frame`s |
-| [`mc.cores`](https://search.r-project.org/R/refmans/parallel/html/mclapply.html) | Number of central processing unit (CPU) cores to use for parallel computing |
-| [`message`](https://search.r-project.org/R/refmans/base/html/message.html) | Diagnostic message printed in R console |
-| [`missing`](https://search.r-project.org/R/refmans/base/html/missing.html) | R [`function`](https://search.r-project.org/R/refmans/base/html/function.html) not having a default value for a [`formals`](https://search.r-project.org/R/refmans/base/html/formals.html) argument |
-| [storage `mode`](https://search.r-project.org/R/refmans/base/html/mode.html), [vector `mode`](https://search.r-project.org/R/refmans/base/html/vector.html) | Storage mode; vector mode |
-| [`NaN`](https://search.r-project.org/R/refmans/base/html/is.finite.html) | Not-a-Number |
-| [`na.fail`, `na.omit`, `na.exclude`, `na.pass`](https://search.r-project.org/R/refmans/stats/html/na.fail.html) | Handle missing values in R objects |
-| [`names`](https://search.r-project.org/R/refmans/base/html/names.html) | Names of an R object |
-| [`ncol`, `nrow`](https://search.r-project.org/R/refmans/base/html/nrow.html) | Number of rows/columns of an [`array`](https://search.r-project.org/R/refmans/base/html/array.html) |
-| [`numeric`](https://search.r-project.org/R/refmans/base/html/numeric.html) | numeric, i.e., [`double`](https://search.r-project.org/R/refmans/base/html/double.html)-precision object |
-| [`object.size`](https://search.r-project.org/R/refmans/utils/html/object.size.html) | Memory allocation |
-| [`pi`](https://search.r-project.org/R/refmans/base/html/Constants.html) | Mathematical constant $\pi$ |
-| `pmean`, `pmedian` | Point-wise mean and median, from package `groupedHyperframe` |
-| [`pmax`, `pmin`](https://search.r-project.org/R/refmans/base/html/Extremes.html) | Point-wise maxima and minima |
-| [`.Primitive`](https://search.r-project.org/R/refmans/base/html/Primitive.html) | *Primitive*, i.e., internally implemented, function |
-| [`range`](https://search.r-project.org/R/refmans/base/html/range.html) | Range of values |
-| [`return`](https://search.r-project.org/R/refmans/base/html/function.html) | R function return |
-| `S3`, `generic`, [`UseMethod`](https://search.r-project.org/R/refmans/base/html/UseMethod.html), [`methods`](https://search.r-project.org/R/refmans/utils/html/methods.html), [`getS3method`](https://search.r-project.org/R/refmans/utils/html/getS3method.html) | `S3` object oriented system, <https://adv-r.hadley.nz/s3.html> |
-| `S4`, [`isS4`](https://search.r-project.org/R/refmans/base/html/isS4.html), [`setClass`](https://search.r-project.org/R/refmans/methods/html/setClass.html), [`setGeneric`](https://search.r-project.org/R/refmans/methods/html/setGeneric.html), [`setMethod`](https://search.r-project.org/R/refmans/methods/html/setMethod.html), [`getMethod`](https://search.r-project.org/R/refmans/methods/html/getMethod.html) | `S4` object oriented system, <https://adv-r.hadley.nz/s4.html>, implemented in package **`methods`** shipped with `r R.version.string` |
-| [`save`](https://search.r-project.org/R/refmans/base/html/save.html), [`saveRDS`](https://search.r-project.org/R/refmans/base/html/readRDS.html), `xz` | Save with [`xz`](https://en.wikipedia.org/wiki/XZ_Utils) compression |
-| [`search`](https://search.r-project.org/R/refmans/base/html/search.html) | Search path |
-| [`seq`, `seq.int`](https://search.r-project.org/R/refmans/base/html/search.html) | Sequence generation |
-| [`signature`](https://search.r-project.org/R/refmans/methods/html/GenericFunctions.html) | Tools for managing `S4` generic functions |
-| [`split`](https://search.r-project.org/R/refmans/base/html/split.html) | Divide into groups |
-| [`stopifnot`](https://search.r-project.org/R/refmans/base/html/stopifnot.html) | To ensure the truth of R [`expression`](https://search.r-project.org/R/refmans/base/html/expression.html)s |
-| [`symbol`, `name`](https://search.r-project.org/R/refmans/base/html/name.html) | R object name/symbol |
-| [`t`, `t.default`](https://search.r-project.org/R/refmans/base/html/t.html) | Transpose |
-| [`tempfile`](https://search.r-project.org/R/refmans/base/html/tempfile.html) | Create names for temporary files |
-| [`typeof`](https://search.r-project.org/R/refmans/base/html/typeof.html) | R internal type or storage mode of any object |
-| [`unclass`](https://search.r-project.org/R/refmans/base/html/class.html) | Remove `S3` `'class'` attribute |
-| [`vector`](https://search.r-project.org/R/refmans/base/html/vector.html) | Vector |
-| [`with`, `with.default`](https://search.r-project.org/R/refmans/base/html/with.html), [`with.hyperframe`](https://search.r-project.org/CRAN/refmans/spatstat.geom/html/with.hyperframe.html) | To `eval`uate an `expression` in a local `environment`, or in *each row* of a `hyperframe` |
-| [`within`, `within.data.frame`](https://search.r-project.org/R/refmans/base/html/with.html) | To `eval`uate an `expression` in a local `environment` and makes modifications to the `environment` |
+| [moved] | [moved] |
 
 : Terms & Abbreviations in R {#tbl-Rterm}
 

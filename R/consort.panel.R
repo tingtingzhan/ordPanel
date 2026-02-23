@@ -42,7 +42,6 @@ consort.panel <- function(x, ...) {
 #' 
 #' @keywords internal
 #' @importFrom consort build_grid
-#' @import patchwork
 #' @export
 consort.panellist <- function(x, ...) {
   

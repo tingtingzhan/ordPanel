@@ -12,6 +12,9 @@ panellist <- function(...) {
   
   class(z) <- c('panellist', 'listof', class(z)) |>
     unique.default()
+  # to make use of
+  # base::print.listof
+  
   return(z)
   
 }
@@ -26,11 +29,13 @@ panellist <- function(...) {
 #' 
 #' @param object a [panellist]
 #' 
+#' @param which \link[base]{character} scalar, 
+#' `'oc'` (default) or (faux) `'roc'`
+#' 
 #' @param ... additional parameters, currently no use
 #' 
 #' @keywords internal
 #' @name autoplot.panellist
-#' @importFrom ggplot2 autoplot
 #' @export autoplot.panellist
 #' @export
 autoplot.panellist <- function(object, ...) {
@@ -39,23 +44,39 @@ autoplot.panellist <- function(object, ...) {
 }
 
 #' @rdname autoplot.panellist
-#' @importFrom ggplot2 autolayer ggplot aes geom_point geom_path scale_y_continuous scale_color_discrete labs
 #' @importFrom scales label_percent
 #' @export autolayer.panellist
 #' @export
-autolayer.panellist <- function(object, ...) {
+autolayer.panellist <- function(
+    object, 
+    which = c('oc', 'roc'),
+    ...
+) {
   
   n1 <- object[[1L]]@m1 |>
     ncol()
+  n0 <- object[[1L]]@m0 |>
+    ncol()
   
-  cum_true_pos <- object |> 
-    lapply(FUN = cum_true_positive)
+  cumsum1. <- object |> 
+    lapply(FUN = cumsum1)
   
-  .x <- cum_true_pos |> lapply(FUN = seq_along) |> unlist()
-  .y <- (cum_true_pos |> unlist()) / n1
+  which <- match.arg(which)
+  
+  .x <- switch(which, oc = {
+    cumsum1. |> 
+      lapply(FUN = seq_along) |> 
+      unlist()
+  }, roc = {
+    cumsum0.. <- object |> 
+      lapply(FUN = cumsum0) |>
+      unlist()
+    (cumsum0.. / n0)
+  })
+  sens <- (cumsum1. |> unlist()) / n1
   .group <- object |> 
     seq_along() |> 
-    rep(times = lengths(cum_true_pos)) |>
+    rep(times = lengths(cumsum1.)) |>
     factor()
   .label <- object |> 
     vapply(FUN = \(i) {
@@ -64,17 +85,29 @@ autolayer.panellist <- function(object, ...) {
       i@m1 |> nrow() |> as.character()
     }, FUN.VALUE = '')
   
-  mp <- aes(x = .x, y = .y, color = .group)
+  mp <- aes(x = .x, y = sens, color = .group)
   
-  list(
+  out <- list(
     geom_point(mapping = mp),
     geom_path(mapping = mp, linewidth = .3),
-    scale_y_continuous(name = 'True Positives Identified', labels = label_percent(), limits = c(0, 1)),
-    scale_color_discrete(name = 'Panels', labels = .label),
-    labs(
-      x = 'Number of Collections per Panel'
-    )
+    scale_y_continuous(name = 'Sensitivity', labels = label_percent(), limits = c(0, 1)),
+    switch(which, oc = {
+      scale_x_continuous(name = 'Number of Collections per Ordered Panel')
+    }, roc = {
+      scale_x_continuous(name = '1 - Sensitivity', labels = label_percent(), limits = c(0, 1))
+    }),
+    scale_color_discrete(name = 'Ordered Panels', labels = .label)
   )
+
+  switch(which, roc = {
+    return(c(
+      out,
+      list(
+        geom_abline(slope = 1, intercept = 0, color = 'grey80', linetype = 2L),
+        coord_equal()
+      )
+    ))
+  }, oc = return(out))
   
 }
 

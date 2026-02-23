@@ -1,7 +1,6 @@
 
 
 # @importFrom parallel detectCores
-#' @importFrom ggplot2 %+replace% theme_minimal theme theme_set
 #' @importFrom grid unit
 .onLoad <- function(libname, pkgname) {
   
@@ -23,7 +22,7 @@
   )  
   
   (theme_minimal() %+replace%
-    theme(legend.key.spacing.y = unit(.03, "npc"))) |> 
+    theme(legend.key.spacing.y = unit(.03, units = 'npc'))) |> 
     theme_set()
   
 }
