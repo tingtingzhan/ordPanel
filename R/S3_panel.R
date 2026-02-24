@@ -68,13 +68,13 @@ subset.panel <- function(x, subset, append.label = FALSE, ...) {
     }, sum0 = {
       e.[[2L]] <- call(name = 'sum0', quote(x))
       id <- eval(e.)
-      .crit <- 'False(+)'
-      .labs <- sprintf(fmt = 'False(+) %s%d/%d', c(.symbol, .inv_symbol), e.[[3L]], x@m0 |> ncol())
+      .crit <- 'Signature False(+)'
+      .labs <- sprintf(fmt = 'Signature False(+) %s%d/%d', c(.symbol, .inv_symbol), e.[[3L]], x@m0 |> ncol())
     }, cumsum0 = {
       e.[[2L]] <- call(name = 'cumsum0', quote(x))
       id <- eval(e.)
-      .crit <- 'panelFalse(+)'
-      .labs <- sprintf(fmt = 'panelFalse(+) %s%d/%d', c(.symbol, .inv_symbol), e.[[3L]], x@m0 |> ncol())
+      .crit <- 'Panel False(+)'
+      .labs <- sprintf(fmt = 'Panel False(+) %s%d/%d', c(.symbol, .inv_symbol), e.[[3L]], x@m0 |> ncol())
     }, 'diff(cumsum1)' = {
       e.[[2L]] <- call(name = 'diff', call(name = 'cumsum1', quote(x))) # cannot use native pipe!
       id <- c(1L, which(eval(e.)) + 1L)

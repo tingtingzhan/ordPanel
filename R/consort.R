@@ -1,11 +1,17 @@
 
 
-#' @title [consort.panel()]
+#' @title CONSORT Diagram of Ordered \linkS4class{panel}
 #' 
-#' @param x a \linkS4class{panel}
+#' @description
+#' CONSORT diagram of an ordered \linkS4class{panel}.
 #' 
-#' @param ... additional parameters of function \link[consort]{consort_plot},
+#' @param x an ordered \linkS4class{panel}
+#' 
+#' @param ... additional parameters of the function \link[consort]{consort_plot},
 #' except for `data`, `orders` and `side_box`
+#' 
+#' @returns 
+#' The function [consort.panel()] returns an R object of class `'consort'`.
 #' 
 #' @keywords internal
 #' @importFrom consort consort_plot
@@ -33,12 +39,18 @@ consort.panel <- function(x, ...) {
 
 
 
-#' @title [consort.panellist()]
+#' @title CONSORT Diagram of Ordered [panellist]
 #' 
-#' @param x a [panellist]
+#' @description
+#' CONSORT diagram of an ordered [panellist].
 #' 
-#' @param ... additional parameters for function \link[patchwork]{wrap_plots}, 
-#' **not** for function [consort.panel()]
+#' @param x an ordered [panellist]
+#' 
+#' @param ... additional parameters for the function \link[patchwork]{wrap_plots}, 
+#' **not** for the function [consort.panel()]
+#' 
+#' @returns 
+#' The function [consort.panellist()] returns a \link[patchwork]{patchwork}.
 #' 
 #' @keywords internal
 #' @importFrom consort build_grid
