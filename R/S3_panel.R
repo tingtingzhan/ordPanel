@@ -3,7 +3,7 @@
 
 #' @title Extract Rows of \linkS4class{panel}
 #' 
-#' @param x a \linkS4class{panel}
+#' @param x \linkS4class{panel}
 #' 
 #' @param i \link[base]{logical} \link[base]{vector}, row indices
 #' 
@@ -33,14 +33,17 @@
 
 #' @title Select a \link[base]{subset} of \linkS4class{panel}
 #' 
-#' @param x a \linkS4class{panel}
+#' @param x \linkS4class{panel}
 #' 
-#' @param subset a \link[base]{language} object
+#' @param subset R \link[base]{language} object
 #' 
 #' @param append.label \link[base]{logical} scalar (default value `FALSE`), 
 #' whether to append the subset-criterion to `x@label`
 #' 
 #' @param ... additional parameters, currently not in use
+#' 
+#' @returns 
+#' The `S3` method [subset.panel()] returns an R object of `S4` class \linkS4class{panel}.
 #' 
 #' @keywords internal
 #' @export subset.panel
@@ -64,7 +67,7 @@ subset.panel <- function(x, subset, append.label = FALSE, ...) {
     switch(EXPR = _, sum1 = {
       e.[[2L]] <- call(name = 'sum1', quote(x))
       id <- eval(e.)
-      .crit <- 'True(+)'
+      .crit <- 'Signature True(+)'
       .labs <- sprintf(fmt = 'Signature True(+) %s%d/%d', c(.symbol, .inv_symbol), e.[[3L]], x@m1 |> ncol())
     }, sum0 = {
       e.[[2L]] <- call(name = 'sum0', quote(x))
@@ -130,9 +133,9 @@ subset.panel <- function(x, subset, append.label = FALSE, ...) {
 
 #' @title Sort \linkS4class{panel} by Given Criterion
 #' 
-#' @param x a \linkS4class{panel}
+#' @param x \linkS4class{panel}
 #' 
-#' @param y a one-sided \link[stats]{formula}
+#' @param y one-sided \link[stats]{formula}
 #' 
 #' @param ... additional parameters of \link[base]{order}
 #' 
@@ -178,7 +181,7 @@ sort_by.panel <- function(x, y, ...) {
 
 #' @title Convert \linkS4class{panel} into \link[flextable]{flextable}
 #' 
-#' @param x a \linkS4class{panel}
+#' @param x \linkS4class{panel}
 #' 
 #' @param ... additional parameters, currently of no use
 #' 

@@ -7,7 +7,7 @@
 \method{[}{panel}(x, i, ...)
 }
 \arguments{
-\item{x}{a \linkS4class{panel}}
+\item{x}{\linkS4class{panel}}
 
 \item{i}{\link[base]{logical} \link[base]{vector}, row indices}
 

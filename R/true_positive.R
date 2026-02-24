@@ -2,7 +2,7 @@
 
 #' @title Number of True & False Positives, per variant
 #' 
-#' @param x a \linkS4class{panel}
+#' @param x \linkS4class{panel}
 #' 
 #' @returns
 #' The functions [sum1()] and [sum0()] return 

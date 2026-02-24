@@ -7,8 +7,9 @@
 \S4method{show}{panel}(object)
 }
 \arguments{
-\item{object}{a \linkS4class{panel}}
+\item{object}{\linkS4class{panel}}
 }
 \description{
 Show \linkS4class{panel}
 }
+\keyword{internal}

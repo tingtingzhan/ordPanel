@@ -7,7 +7,7 @@
 \method{as_flextable}{panel}(x, ...)
 }
 \arguments{
-\item{x}{a \linkS4class{panel}}
+\item{x}{\linkS4class{panel}}
 
 \item{...}{additional parameters, currently of no use}
 }

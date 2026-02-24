@@ -3,13 +3,14 @@
 #' @title `S4` Class \linkS4class{panel}
 #' 
 #' @slot m1 \link[base]{logical} \link[base]{matrix}, true positives,
-#' i.e., variants tested positive in positive subjects (patients)
+#' i.e., variants tested positive in the positive subjects (patients).
 #' Rows are different variants.  Columns are different subjects.
+#' The \link[base]{rownames} of `m0` and `m1` must be the same
 #' 
 #' @slot m0 \link[base]{logical} \link[base]{matrix}, false positives,
-#' i.e., variants tested positive in negative subjects (patients)
+#' i.e., variants tested positive in the negative subjects (patients).
 #' Rows are different variants.  Columns are different subjects.
-#' Order of variants in `m0` and `m1` must be the same
+#' The \link[base]{rownames} of `m0` and `m1` must be the same.
 #' 
 #' @slot id \link[base]{list} of \link[base]{character} \link[base]{vector}s
 #' 
@@ -20,6 +21,9 @@
 #' create a \link[consort]{consort_plot}
 #' 
 #' @param m1,m0 see **Slots**
+#' 
+#' @returns
+#' The function [panel()] returns an R object of `S4` class \linkS4class{panel}.
 #' 
 #' @keywords internal
 #' @name panel
@@ -80,8 +84,9 @@ panel <- function(m1, m0) {
 
 #' @title Show \linkS4class{panel}
 #' 
-#' @param object a \linkS4class{panel}
+#' @param object \linkS4class{panel}
 #' 
+#' @keywords internal
 #' @export
 setMethod(f = show, signature = 'panel', definition = \(object) {
   

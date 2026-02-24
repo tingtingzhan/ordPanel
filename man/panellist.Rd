@@ -9,6 +9,11 @@ panellist(...)
 \arguments{
 \item{...}{one or more \linkS4class{panel}s}
 }
-\description{
-\code{panellist}
+\value{
+The function \code{\link[=panellist]{panellist()}} returns an \code{S3} object of \code{panellist},
+which inherits from the classes \link[stats]{listof} and \link[base]{list}.
 }
+\description{
+To combine multiple \linkS4class{panel}s.
+}
+\keyword{internal}

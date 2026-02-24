@@ -7,9 +7,9 @@
 \method{sort_by}{panel}(x, y, ...)
 }
 \arguments{
-\item{x}{a \linkS4class{panel}}
+\item{x}{\linkS4class{panel}}
 
-\item{y}{a one-sided \link[stats]{formula}}
+\item{y}{one-sided \link[stats]{formula}}
 
 \item{...}{additional parameters of \link[base]{order}}
 }

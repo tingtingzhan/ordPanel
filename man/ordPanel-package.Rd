@@ -6,7 +6,7 @@
 \alias{ordPanel-package}
 \title{ordPanel: Ordered Panel}
 \description{
-Ordered panel by sensitivity and specificity.
+Ordered panel of variant-signatures by sensitivity and specificity.
 }
 \note{
 Help files of individual functions are intentionally suppressed in the \code{pdf} manual.
@@ -25,8 +25,7 @@ Useful links:
 
 Other contributors:
 \itemize{
-  \item Aejaz Sayeed \email{aejaz.sayeed@bblumberg.org} [contributor]
+  \item Aejaz Sayeed \email{aejaz.sayeed@bblumberg.org} (\href{https://orcid.org/0000-0001-6900-7524}{ORCID}) [contributor]
 }
 
 }
-\keyword{internal}

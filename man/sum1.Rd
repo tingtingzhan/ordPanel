@@ -16,7 +16,7 @@ cumsum1(x)
 cumsum0(x)
 }
 \arguments{
-\item{x}{a \linkS4class{panel}}
+\item{x}{\linkS4class{panel}}
 }
 \value{
 The functions \code{\link[=sum1]{sum1()}} and \code{\link[=sum0]{sum0()}} return

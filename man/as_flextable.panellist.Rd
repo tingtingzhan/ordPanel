@@ -7,7 +7,7 @@
 \method{as_flextable}{panellist}(x, ...)
 }
 \arguments{
-\item{x}{a \link{panellist}}
+\item{x}{\link{panellist}}
 
 \item{...}{additional parameters, currently of no use}
 }

@@ -3,7 +3,7 @@
 
 #' @title Append to `@label` of \linkS4class{panel}
 #' 
-#' @param x a \linkS4class{panel}
+#' @param x \linkS4class{panel}
 #' 
 #' @param info \link[base]{character} scalar
 #' 

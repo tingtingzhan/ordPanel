@@ -3,13 +3,14 @@ Type: Package
 Title: Ordered Panel
 Version: 0.1.0
 Date: 2026-02-23
-Description: Ordered panel by sensitivity and specificity.
+Description: Ordered panel of variant-signatures by sensitivity and specificity.
 License: GPL-2
 Encoding: UTF-8
 Authors@R: c(person(given = "Tingting", family = "Zhan", role = c("aut",
         "cre"), email = "tingtingzhan@gmail.com", comment = c(ORCID =
         '0000-0001-9971-4844')), person(given = "Aejaz", family = "Sayeed", 
-        role = "ctb", email = "aejaz.sayeed@bblumberg.org"))
+        role = "ctb", email = "aejaz.sayeed@bblumberg.org", 
+        comment = c(ORCID = '0000-0001-6900-7524')))
 Language: en-US
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3

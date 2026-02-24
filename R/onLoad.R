@@ -1,7 +1,6 @@
 
 
 # @importFrom parallel detectCores
-#' @importFrom grid unit
 .onLoad <- function(libname, pkgname) {
   
   Sys.setenv(
@@ -20,10 +19,6 @@
     bitmapType = 'cairo' # unicode support # MUST as of macOS, R 4.5.1
     
   )  
-  
-  (theme_minimal() %+replace%
-    theme(legend.key.spacing.y = unit(.03, units = 'npc'))) |> 
-    theme_set()
   
 }
 

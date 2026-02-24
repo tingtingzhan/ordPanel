@@ -7,7 +7,7 @@
 append_label(x, info)
 }
 \arguments{
-\item{x}{a \linkS4class{panel}}
+\item{x}{\linkS4class{panel}}
 
 \item{info}{\link[base]{character} scalar}
 }

@@ -11,6 +11,9 @@ panel(m1, m0)
 \arguments{
 \item{m1, m0}{see \strong{Slots}}
 }
+\value{
+The function \code{\link[=panel]{panel()}} returns an R object of \code{S4} class \linkS4class{panel}.
+}
 \description{
 \code{S4} Class \linkS4class{panel}
 }
@@ -18,13 +21,14 @@ panel(m1, m0)
 
 \describe{
 \item{\code{m1}}{\link[base]{logical} \link[base]{matrix}, true positives,
-i.e., variants tested positive in positive subjects (patients)
-Rows are different variants.  Columns are different subjects.}
+i.e., variants tested positive in the positive subjects (patients).
+Rows are different variants.  Columns are different subjects.
+The \link[base]{rownames} of \code{m0} and \code{m1} must be the same}
 
 \item{\code{m0}}{\link[base]{logical} \link[base]{matrix}, false positives,
-i.e., variants tested positive in negative subjects (patients)
+i.e., variants tested positive in the negative subjects (patients).
 Rows are different variants.  Columns are different subjects.
-Order of variants in \code{m0} and \code{m1} must be the same}
+The \link[base]{rownames} of \code{m0} and \code{m1} must be the same.}
 
 \item{\code{id}}{\link[base]{list} of \link[base]{character} \link[base]{vector}s}
 

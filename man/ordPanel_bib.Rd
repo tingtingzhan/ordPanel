@@ -8,7 +8,7 @@
 .zezulinski25(key = "Zezulinski25", ...)
 }
 \arguments{
-\item{key, ...}{..}
+\item{key, ...}{additional parameters of the function \link[utils]{bibentry}}
 }
 \description{
 Bibliography in package \pkg{ordPanel}

@@ -7,14 +7,17 @@
 \method{subset}{panel}(x, subset, append.label = FALSE, ...)
 }
 \arguments{
-\item{x}{a \linkS4class{panel}}
+\item{x}{\linkS4class{panel}}
 
-\item{subset}{a \link[base]{language} object}
+\item{subset}{R \link[base]{language} object}
 
 \item{append.label}{\link[base]{logical} scalar (default value \code{FALSE}),
 whether to append the subset-criterion to \code{x@label}}
 
 \item{...}{additional parameters, currently not in use}
+}
+\value{
+The \code{S3} method \code{\link[=subset.panel]{subset.panel()}} returns an R object of \code{S4} class \linkS4class{panel}.
 }
 \description{
 Select a \link[base]{subset} of \linkS4class{panel}

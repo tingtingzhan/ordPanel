@@ -2,8 +2,16 @@
 
 #' @title `panellist`
 #' 
+#' @description
+#' To combine multiple \linkS4class{panel}s.
+#' 
 #' @param ... one or more \linkS4class{panel}s
 #' 
+#' @returns
+#' The function [panellist()] returns an `S3` object of `panellist`,
+#' which inherits from the classes \link[stats]{listof} and \link[base]{list}.
+#' 
+#' @keywords internal
 #' @export
 panellist <- function(...) {
   
@@ -25,12 +33,12 @@ panellist <- function(...) {
 
 
 
-#' @title Visualize [panellist]
+#' @title Visualize [panellist] using Package \CRANpkg{ggplot2}
 #' 
-#' @param object a [panellist]
+#' @param object [panellist]
 #' 
 #' @param which \link[base]{character} scalar, 
-#' `'oc'` (default) or (faux) `'roc'`
+#' `'oc'` (default value) or (faux) `'roc'`
 #' 
 #' @param ... additional parameters, currently no use
 #' 
@@ -90,13 +98,13 @@ autolayer.panellist <- function(
   out <- list(
     geom_point(mapping = mp),
     geom_path(mapping = mp, linewidth = .3),
-    scale_y_continuous(name = 'Sensitivity', labels = label_percent(), limits = c(0, 1)),
+    scale_y_continuous(name = 'Sub-Panel Sensitivity', labels = label_percent(), limits = c(0, 1)),
     switch(which, oc = {
-      scale_x_continuous(name = 'Number of Signatures per Ordered Panel')
+      scale_x_continuous(name = 'Number of Signatures per Sub-Panel')
     }, roc = {
-      scale_x_continuous(name = '1 - Specificity', labels = label_percent(), limits = c(0, 1))
+      scale_x_continuous(name = 'Sub-Panel Non-Specificity', labels = label_percent(), limits = c(0, 1))
     }),
-    scale_color_discrete(name = 'Ordered Panels', labels = .label)
+    scale_color_discrete(name = 'Ordered Sub-Panels', labels = .label)
   )
 
   switch(which, roc = {
@@ -119,7 +127,7 @@ autolayer.panellist <- function(
 
 #' @title Convert a [panellist] into \link[flextable]{flextable}
 #' 
-#' @param x a [panellist]
+#' @param x [panellist]
 #' 
 #' @param ... additional parameters, currently of no use
 #' 
