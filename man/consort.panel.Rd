@@ -18,4 +18,3 @@ The function \code{\link[=consort.panel]{consort.panel()}} returns an R object o
 \description{
 CONSORT diagram of an ordered \linkS4class{panel}.
 }
-\keyword{internal}

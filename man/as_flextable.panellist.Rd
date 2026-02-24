@@ -20,4 +20,3 @@ Convert a \link{panellist} into \link[flextable]{flextable}
 \note{
 The \code{S3} method \code{\link[=as_flextable.panellist]{as_flextable.panellist()}} may be eventually deprecated.
 }
-\keyword{internal}

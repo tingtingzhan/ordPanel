@@ -12,7 +12,6 @@
 #' @returns
 #' The `S3` method `[.panel()` returns a \linkS4class{panel}.
 #' 
-#' @keywords internal
 #' @export
 `[.panel` <- function(x, i, ...) {
   new(
@@ -45,7 +44,6 @@
 #' @returns 
 #' The `S3` method [subset.panel()] returns an R object of `S4` class \linkS4class{panel}.
 #' 
-#' @keywords internal
 #' @export subset.panel
 #' @export
 subset.panel <- function(x, subset, append.label = FALSE, ...) {
@@ -139,7 +137,7 @@ subset.panel <- function(x, subset, append.label = FALSE, ...) {
 #' 
 #' @param ... additional parameters of \link[base]{order}
 #' 
-#' @keywords internal
+#' 
 #' @export sort_by.panel
 #' @export
 sort_by.panel <- function(x, y, ...) {
@@ -188,7 +186,7 @@ sort_by.panel <- function(x, y, ...) {
 #' @returns
 #' The `S3` method [as_flextable.panel()] returns a \link[flextable]{flextable}.
 #' 
-#' @keywords internal
+#' 
 #' @importFrom scales label_percent
 #' @export as_flextable.panel
 #' @export

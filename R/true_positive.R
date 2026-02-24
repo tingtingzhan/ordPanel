@@ -11,7 +11,7 @@
 #' The functions [cumsum1()] and [cumsum0()] return
 #' a **strictly** increasing \link[base]{integer} \link[base]{vector}.
 #' 
-#' @keywords internal
+#' 
 #' @name sum1
 #' @export
 sum1 <- function(x) {

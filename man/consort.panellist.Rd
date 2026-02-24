@@ -18,4 +18,3 @@ The function \code{\link[=consort.panellist]{consort.panellist()}} returns a \li
 \description{
 CONSORT diagram of an ordered \link{panellist}.
 }
-\keyword{internal}

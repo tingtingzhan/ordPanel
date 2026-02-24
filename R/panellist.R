@@ -11,7 +11,7 @@
 #' The function [panellist()] returns an `S3` object of `panellist`,
 #' which inherits from the classes \link[stats]{listof} and \link[base]{list}.
 #' 
-#' @keywords internal
+#' 
 #' @export
 panellist <- function(...) {
   
@@ -42,7 +42,7 @@ panellist <- function(...) {
 #' 
 #' @param ... additional parameters, currently no use
 #' 
-#' @keywords internal
+#' 
 #' @name autoplot.panellist
 #' @export autoplot.panellist
 #' @export
@@ -137,7 +137,7 @@ autolayer.panellist <- function(
 #' @note
 #' The `S3` method [as_flextable.panellist()] may be eventually deprecated.
 #' 
-#' @keywords internal
+#' 
 #' @importFrom scales pal_hue
 #' @export as_flextable.panellist
 #' @export

@@ -25,7 +25,7 @@
 #' @returns
 #' The function [panel()] returns an R object of `S4` class \linkS4class{panel}.
 #' 
-#' @keywords internal
+#' 
 #' @name panel
 #' @aliases panel-class
 #' @export
@@ -86,7 +86,7 @@ panel <- function(m1, m0) {
 #' 
 #' @param object \linkS4class{panel}
 #' 
-#' @keywords internal
+#' 
 #' @export
 setMethod(f = show, signature = 'panel', definition = \(object) {
   

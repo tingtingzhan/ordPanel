@@ -16,4 +16,3 @@ which inherits from the classes \link[stats]{listof} and \link[base]{list}.
 \description{
 To combine multiple \linkS4class{panel}s.
 }
-\keyword{internal}

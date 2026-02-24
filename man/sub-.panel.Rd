@@ -19,4 +19,3 @@ The \code{S3} method \verb{[.panel()} returns a \linkS4class{panel}.
 \description{
 Extract Rows of \linkS4class{panel}
 }
-\keyword{internal}

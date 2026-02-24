@@ -19,4 +19,3 @@ There is no generic function \verb{labels<-} in package \pkg{base} !!!
 
 Function \link[base]{comment<-} is not an S3 generic.
 }
-\keyword{internal}

@@ -12,7 +12,7 @@
 #' 
 #' Function \link[base]{comment<-} is not an S3 generic.
 #' 
-#' @keywords internal
+#' 
 #' @export
 append_label <- function(x, info) {
   

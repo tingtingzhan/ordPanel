@@ -23,9 +23,9 @@ Data sets used as examples in package \pkg{ordPanel}.
 # data used in 
 .zezulinski25()
 
+
 }
 \references{
 \doi{10.1159/000545366}
 }
 \keyword{datasets}
-\keyword{internal}

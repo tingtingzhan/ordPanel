@@ -13,7 +13,7 @@
 #' @returns 
 #' The function [consort.panel()] returns an R object of class `'consort'`.
 #' 
-#' @keywords internal
+#' 
 #' @importFrom consort consort_plot
 #' @export
 consort.panel <- function(x, ...) {
@@ -52,7 +52,7 @@ consort.panel <- function(x, ...) {
 #' @returns 
 #' The function [consort.panellist()] returns a \link[patchwork]{patchwork}.
 #' 
-#' @keywords internal
+#' 
 #' @importFrom consort build_grid
 #' @export
 consort.panellist <- function(x, ...) {

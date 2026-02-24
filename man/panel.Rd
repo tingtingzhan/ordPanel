@@ -39,4 +39,3 @@ a human-friendly description of the \linkS4class{panel}}
 create a \link[consort]{consort_plot}}
 }}
 
-\keyword{internal}

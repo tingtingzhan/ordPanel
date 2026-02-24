@@ -13,4 +13,3 @@
 \description{
 Bibliography in package \pkg{ordPanel}
 }
-\keyword{internal}

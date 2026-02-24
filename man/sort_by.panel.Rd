@@ -16,4 +16,3 @@
 \description{
 Sort \linkS4class{panel} by Given Criterion
 }
-\keyword{internal}

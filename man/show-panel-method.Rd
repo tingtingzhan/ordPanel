@@ -12,4 +12,3 @@
 \description{
 Show \linkS4class{panel}
 }
-\keyword{internal}

@@ -20,4 +20,3 @@
 \description{
 Visualize \link{panellist} using Package \CRANpkg{ggplot2}
 }
-\keyword{internal}

@@ -4,7 +4,7 @@
 #' 
 #' @param key,... additional parameters of the function \link[utils]{bibentry}
 #' 
-#' @keywords internal
+#' 
 #' @name ordPanel_bib
 #' @export
 .zezulinski25 <- \(key = 'Zezulinski25', ...) {

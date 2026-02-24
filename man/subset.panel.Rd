@@ -22,4 +22,3 @@ The \code{S3} method \code{\link[=subset.panel]{subset.panel()}} returns an R ob
 \description{
 Select a \link[base]{subset} of \linkS4class{panel}
 }
-\keyword{internal}

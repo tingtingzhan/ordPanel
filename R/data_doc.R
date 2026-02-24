@@ -12,7 +12,7 @@
 #' # data used in 
 #' .zezulinski25()
 #' 
-#' @keywords internal
+#' 
 #' @name pkg_data
 'm1'
 #' @rdname pkg_data

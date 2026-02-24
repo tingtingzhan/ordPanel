@@ -28,4 +28,3 @@ a \strong{strictly} increasing \link[base]{integer} \link[base]{vector}.
 \description{
 Number of True & False Positives, per variant
 }
-\keyword{internal}

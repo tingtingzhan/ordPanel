@@ -17,4 +17,3 @@ The \code{S3} method \code{\link[=as_flextable.panel]{as_flextable.panel()}} ret
 \description{
 Convert \linkS4class{panel} into \link[flextable]{flextable}
 }
-\keyword{internal}
