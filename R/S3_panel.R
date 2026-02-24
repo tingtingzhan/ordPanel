@@ -37,7 +37,7 @@
 #' 
 #' @param subset a \link[base]{language} object
 #' 
-#' @param append.label \link[base]{logical} scalar (default value `TRUE`), 
+#' @param append.label \link[base]{logical} scalar (default value `FALSE`), 
 #' whether to append the subset-criterion to `x@label`
 #' 
 #' @param ... additional parameters, currently not in use
@@ -45,7 +45,7 @@
 #' @keywords internal
 #' @export subset.panel
 #' @export
-subset.panel <- function(x, subset, append.label = TRUE, ...) {
+subset.panel <- function(x, subset, append.label = FALSE, ...) {
   
   e <- substitute(subset)
   e. <- e
@@ -65,7 +65,7 @@ subset.panel <- function(x, subset, append.label = TRUE, ...) {
       e.[[2L]] <- call(name = 'sum1', quote(x))
       id <- eval(e.)
       .crit <- 'True(+)'
-      .labs <- sprintf(fmt = 'True(+) %s%d/%d', c(.symbol, .inv_symbol), e.[[3L]], x@m1 |> ncol())
+      .labs <- sprintf(fmt = 'Signature True(+) %s%d/%d', c(.symbol, .inv_symbol), e.[[3L]], x@m1 |> ncol())
     }, sum0 = {
       e.[[2L]] <- call(name = 'sum0', quote(x))
       id <- eval(e.)
@@ -79,8 +79,8 @@ subset.panel <- function(x, subset, append.label = TRUE, ...) {
     }, 'diff(cumsum1)' = {
       e.[[2L]] <- call(name = 'diff', call(name = 'cumsum1', quote(x))) # cannot use native pipe!
       id <- c(1L, which(eval(e.)) + 1L)
-      .crit <- 'diffTrue(+)'
-      .labs <- sprintf(fmt = 'diffTrue(+) %s%d/%d', c(.symbol, .inv_symbol), e.[[3L]], x@m1 |> ncol())
+      .crit <- 'Increment True(+)'
+      .labs <- sprintf(fmt = 'Increment True(+) %s%d/%d', c(.symbol, .inv_symbol), e.[[3L]], x@m1 |> ncol())
     })
 
   ret <- x[id, ] # `[.panel`
