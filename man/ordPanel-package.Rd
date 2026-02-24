@@ -6,10 +6,23 @@
 \alias{ordPanel-package}
 \title{ordPanel: Ordered Panel}
 \description{
-Ordered panel.
+Ordered panel by sensitivity and specificity.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/tingtingzhan/ordPanel}
+  \item \url{https://tingtingzhan-ordpanel.netlify.app}
+}
+
 }
 \author{
 \strong{Maintainer}: Tingting Zhan \email{tingtingzhan@gmail.com} (\href{https://orcid.org/0000-0001-9971-4844}{ORCID})
+
+Other contributors:
+\itemize{
+  \item Aejaz Sayeed \email{aejaz.sayeed@bblumberg.org} [contributor]
+}
 
 }
 \keyword{internal}
