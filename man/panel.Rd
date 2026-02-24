@@ -4,7 +4,7 @@
 \name{panel}
 \alias{panel}
 \alias{panel-class}
-\title{\linkS4class{panel}}
+\title{\code{S4} Class \linkS4class{panel}}
 \usage{
 panel(m1, m0)
 }
@@ -12,7 +12,7 @@ panel(m1, m0)
 \item{m1, m0}{see \strong{Slots}}
 }
 \description{
-\linkS4class{panel}
+\code{S4} Class \linkS4class{panel}
 }
 \section{Slots}{
 

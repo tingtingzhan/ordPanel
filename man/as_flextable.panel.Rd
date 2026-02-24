@@ -2,16 +2,19 @@
 % Please edit documentation in R/S3_panel.R
 \name{as_flextable.panel}
 \alias{as_flextable.panel}
-\title{as_flextable.panel}
+\title{Convert \linkS4class{panel} into \link[flextable]{flextable}}
 \usage{
 \method{as_flextable}{panel}(x, ...)
 }
 \arguments{
 \item{x}{a \linkS4class{panel}}
 
-\item{...}{..}
+\item{...}{additional parameters, currently of no use}
+}
+\value{
+The \code{S3} method \code{\link[=as_flextable.panel]{as_flextable.panel()}} returns a \link[flextable]{flextable}.
 }
 \description{
-as_flextable.panel
+Convert \linkS4class{panel} into \link[flextable]{flextable}
 }
 \keyword{internal}

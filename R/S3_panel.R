@@ -10,8 +10,9 @@
 #' @param ... additional parameters, currently not in use
 #' 
 #' @returns
-#' Function ?? returns a \linkS4class{panel}.
+#' The `S3` method `[.panel()` returns a \linkS4class{panel}.
 #' 
+#' @keywords internal
 #' @export
 `[.panel` <- function(x, i, ...) {
   new(
@@ -175,11 +176,14 @@ sort_by.panel <- function(x, y, ...) {
 
 
 
-#' @title as_flextable.panel
+#' @title Convert \linkS4class{panel} into \link[flextable]{flextable}
 #' 
 #' @param x a \linkS4class{panel}
 #' 
-#' @param ... ..
+#' @param ... additional parameters, currently of no use
+#' 
+#' @returns
+#' The `S3` method [as_flextable.panel()] returns a \link[flextable]{flextable}.
 #' 
 #' @keywords internal
 #' @importFrom scales label_percent

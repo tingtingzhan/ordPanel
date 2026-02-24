@@ -9,9 +9,15 @@
 \arguments{
 \item{x}{a \link{panellist}}
 
-\item{...}{..}
+\item{...}{additional parameters, currently of no use}
+}
+\value{
+The \code{S3} method \code{\link[=as_flextable.panellist]{as_flextable.panellist()}} returns a \link[flextable]{flextable}.
 }
 \description{
 Convert a \link{panellist} into \link[flextable]{flextable}
+}
+\note{
+The \code{S3} method \code{\link[=as_flextable.panellist]{as_flextable.panellist()}} may be eventually deprecated.
 }
 \keyword{internal}

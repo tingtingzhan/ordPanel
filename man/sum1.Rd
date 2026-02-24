@@ -19,11 +19,11 @@ cumsum0(x)
 \item{x}{a \linkS4class{panel}}
 }
 \value{
-Functions \code{\link[=sum1]{sum1()}} and \code{\link[=sum0]{sum0()}} return
+The functions \code{\link[=sum1]{sum1()}} and \code{\link[=sum0]{sum0()}} return
 a \link[base]{integer} \link[base]{vector}.
 
-Function \code{\link[=cumsum1]{cumsum1()}} and \code{\link[=cumsum0]{cumsum0()}} return
-a (not strictly) increasing \link[base]{integer} \link[base]{vector}.
+The functions \code{\link[=cumsum1]{cumsum1()}} and \code{\link[=cumsum0]{cumsum0()}} return
+a \strong{strictly} increasing \link[base]{integer} \link[base]{vector}.
 }
 \description{
 Number of True & False Positives, per variant

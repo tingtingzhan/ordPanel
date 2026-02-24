@@ -14,8 +14,9 @@
 \item{...}{additional parameters, currently not in use}
 }
 \value{
-Function ?? returns a \linkS4class{panel}.
+The \code{S3} method \verb{[.panel()} returns a \linkS4class{panel}.
 }
 \description{
 Extract Rows of \linkS4class{panel}
 }
+\keyword{internal}

@@ -8,6 +8,10 @@
 \description{
 Ordered panel by sensitivity and specificity.
 }
+\note{
+Help files of individual functions are intentionally suppressed in the \code{pdf} manual.
+Users are encouraged to get started with the vignettes (in the URL's at the bottom of this documentation).
+}
 \seealso{
 Useful links:
 \itemize{

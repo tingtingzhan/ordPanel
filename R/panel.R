@@ -1,6 +1,6 @@
 
 
-#' @title \linkS4class{panel}
+#' @title `S4` Class \linkS4class{panel}
 #' 
 #' @slot m1 \link[base]{logical} \link[base]{matrix}, true positives,
 #' i.e., variants tested positive in positive subjects (patients)
@@ -106,10 +106,6 @@ setMethod(f = show, signature = 'panel', definition = \(object) {
     object@m0 |> ncol() |> col_blue(),
     'negative' |> col_green()
   ) |> cat()
-  
-  #object |>
-  #  as_flextable.panel() |>
-  #  print()
   
 })
 

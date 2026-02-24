@@ -121,7 +121,13 @@ autolayer.panellist <- function(
 #' 
 #' @param x a [panellist]
 #' 
-#' @param ... ..
+#' @param ... additional parameters, currently of no use
+#' 
+#' @returns
+#' The `S3` method [as_flextable.panellist()] returns a \link[flextable]{flextable}.
+#'
+#' @note
+#' The `S3` method [as_flextable.panellist()] may be eventually deprecated.
 #' 
 #' @keywords internal
 #' @importFrom scales pal_hue

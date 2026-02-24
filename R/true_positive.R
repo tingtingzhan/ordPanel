@@ -5,11 +5,11 @@
 #' @param x a \linkS4class{panel}
 #' 
 #' @returns
-#' Functions [sum1()] and [sum0()] return 
+#' The functions [sum1()] and [sum0()] return 
 #' a \link[base]{integer} \link[base]{vector}.
 #' 
-#' Function [cumsum1()] and [cumsum0()] return
-#' a (not strictly) increasing \link[base]{integer} \link[base]{vector}.
+#' The functions [cumsum1()] and [cumsum0()] return
+#' a **strictly** increasing \link[base]{integer} \link[base]{vector}.
 #' 
 #' @keywords internal
 #' @name sum1
