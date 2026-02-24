@@ -4,15 +4,15 @@
 \alias{subset.panel}
 \title{Select a \link[base]{subset} of \linkS4class{panel}}
 \usage{
-\method{subset}{panel}(x, subset, append.label = FALSE, ...)
+\method{subset}{panel}(x, subset, append.label = TRUE, ...)
 }
 \arguments{
 \item{x}{a \linkS4class{panel}}
 
 \item{subset}{a \link[base]{language} object}
 
-\item{append.label}{\link[base]{logical} scalar, whether to
-append the criterion \code{subset} to \code{x@label}, default \code{FALSE}}
+\item{append.label}{\link[base]{logical} scalar (default value \code{TRUE}),
+whether to append the subset-criterion to \code{x@label}}
 
 \item{...}{additional parameters, currently not in use}
 }

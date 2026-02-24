@@ -37,15 +37,15 @@
 #' 
 #' @param subset a \link[base]{language} object
 #' 
-#' @param append.label \link[base]{logical} scalar, whether to 
-#' append the criterion `subset` to `x@label`, default `FALSE`
+#' @param append.label \link[base]{logical} scalar (default value `TRUE`), 
+#' whether to append the subset-criterion to `x@label`
 #' 
 #' @param ... additional parameters, currently not in use
 #' 
 #' @keywords internal
 #' @export subset.panel
 #' @export
-subset.panel <- function(x, subset, append.label = FALSE, ...) {
+subset.panel <- function(x, subset, append.label = TRUE, ...) {
   
   e <- substitute(subset)
   e. <- e
