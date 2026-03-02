@@ -1,9 +1,9 @@
 
 
-#' @title CONSORT Diagram of Ordered \linkS4class{panel}
+#' @title CONSORT-Like Flow-Chart of Ordered \linkS4class{panel}
 #' 
 #' @description
-#' CONSORT diagram of an ordered \linkS4class{panel}.
+#' To create a CONSORT-Like flow-chart of an ordered \linkS4class{panel}.
 #' 
 #' @param x an ordered \linkS4class{panel}
 #' 
@@ -11,12 +11,12 @@
 #' except for `data`, `orders` and `side_box`
 #' 
 #' @returns 
-#' The function [consort.panel()] returns an R object of class `'consort'`.
-#' 
+#' The function [plot.panel()] returns an R object of class `'consort'`.
 #' 
 #' @importFrom consort consort_plot
+#' @export plot.panel
 #' @export
-consort.panel <- function(x, ...) {
+plot.panel <- function(x, ...) {
   
   cst <- x@consort
   nc <- length(cst)
@@ -39,28 +39,28 @@ consort.panel <- function(x, ...) {
 
 
 
-#' @title CONSORT Diagram of Ordered [panellist]
+#' @title CONSORT-Like Flow-Chart of Ordered [panellist]
 #' 
 #' @description
-#' CONSORT diagram of an ordered [panellist].
+#' To create a CONSORT-Like flow-chart of an ordered [panellist].
 #' 
 #' @param x an ordered [panellist]
 #' 
 #' @param ... additional parameters for the function \link[patchwork]{wrap_plots}, 
-#' **not** for the function [consort.panel()]
+#' **not** for the function [plot.panel()]
 #' 
 #' @returns 
-#' The function [consort.panellist()] returns a \link[patchwork]{patchwork}.
-#' 
+#' The function [plot.panellist()] returns a \link[patchwork]{patchwork}.
 #' 
 #' @importFrom consort build_grid
+#' @export plot.panellist
 #' @export
-consort.panellist <- function(x, ...) {
+plot.panellist <- function(x, ...) {
   
   x |> 
     lapply(FUN = \(i) {
       i |> 
-        consort.panel() |> 
+        plot.panel() |> 
         build_grid() |>
         wrap_elements()
     }) |>
