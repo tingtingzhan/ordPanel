@@ -9,6 +9,9 @@
 \arguments{
 \item{object}{\linkS4class{panel}}
 }
+\value{
+The \link[methods]{show} method of \linkS4class{panel} class does not have a returned value.l
+}
 \description{
 Show \linkS4class{panel}
 }

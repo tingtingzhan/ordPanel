@@ -11,11 +11,14 @@ append_label(x, info)
 
 \item{info}{\link[base]{character} scalar}
 }
+\value{
+The function \code{\link[=append_label]{append_label()}} returns an \linkS4class{panel} object.
+}
 \description{
 Append to \verb{@label} of \linkS4class{panel}
 }
 \note{
-There is no generic function \verb{labels<-} in package \pkg{base} !!!
+There is no generic function \verb{labels<-} in package \pkg{base}.
 
-Function \link[base]{comment<-} is not an S3 generic.
+The function \link[base]{comment<-} is not an S3 generic.
 }

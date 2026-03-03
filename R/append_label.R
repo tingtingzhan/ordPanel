@@ -7,10 +7,13 @@
 #' 
 #' @param info \link[base]{character} scalar
 #' 
-#' @note
-#' There is no generic function `labels<-` in package \pkg{base} !!!
+#' @returns
+#' The function [append_label()] returns an \linkS4class{panel} object.
 #' 
-#' Function \link[base]{comment<-} is not an S3 generic.
+#' @note
+#' There is no generic function `labels<-` in package \pkg{base}.
+#' 
+#' The function \link[base]{comment<-} is not an S3 generic.
 #' 
 #' 
 #' @export

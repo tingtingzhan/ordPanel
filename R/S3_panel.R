@@ -137,6 +137,8 @@ subset.panel <- function(x, subset, append.label = FALSE, ...) {
 #' 
 #' @param ... additional parameters of \link[base]{order}
 #' 
+#' @returns
+#' The `S3` method [sort_by.panel()] returns a \linkS4class{panel}.
 #' 
 #' @export sort_by.panel
 #' @export

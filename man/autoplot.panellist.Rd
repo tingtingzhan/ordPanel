@@ -17,6 +17,9 @@
 \item{which}{\link[base]{character} scalar,
 \code{'oc'} (default value) or (faux) \code{'roc'}}
 }
+\value{
+The \code{S3} method \code{\link[=autoplot.panellist]{autoplot.panellist()}} returns a \link[ggplot2]{ggplot} object.
+}
 \description{
 Visualize \link{panellist} using Package \CRANpkg{ggplot2}
 }

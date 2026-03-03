@@ -42,6 +42,8 @@ panellist <- function(...) {
 #' 
 #' @param ... additional parameters, currently no use
 #' 
+#' @returns
+#' The `S3` method [autoplot.panellist()] returns a \link[ggplot2]{ggplot} object.
 #' 
 #' @name autoplot.panellist
 #' @export autoplot.panellist

@@ -10,6 +10,9 @@
 \arguments{
 \item{key, ...}{additional parameters of the function \link[utils]{bibentry}}
 }
+\value{
+The function \code{\link[=.zezulinski25]{.zezulinski25()}} returns a \link[utils]{bibentry} object.
+}
 \description{
 Bibliography in package \pkg{ordPanel}
 }

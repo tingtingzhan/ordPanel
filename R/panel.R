@@ -86,6 +86,8 @@ panel <- function(m1, m0) {
 #' 
 #' @param object \linkS4class{panel}
 #' 
+#' @returns
+#' The \link[methods]{show} method of \linkS4class{panel} class does not have a returned value.l
 #' 
 #' @export
 setMethod(f = show, signature = 'panel', definition = \(object) {
