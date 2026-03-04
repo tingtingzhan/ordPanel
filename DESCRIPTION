@@ -18,6 +18,6 @@ LazyData: true
 LazyDataCompression: xz
 URL: https://github.com/tingtingzhan/ordPanel, 
     https://tingtingzhan-ordpanel.netlify.app
-Depends: R (>= 4.5.0), flextable, ggplot2
-Imports: cli, methods, consort, matrixStats, patchwork, scales
+Depends: R (>= 4.5.0)
+Imports: cli, flextable, ggplot2, methods, consort, matrixStats, patchwork, scales
 
