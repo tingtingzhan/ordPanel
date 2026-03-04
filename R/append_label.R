@@ -26,6 +26,8 @@ append_label <- function(x, info) {
         x |> cumsum0() |> max(),
         x@m0 |> ncol()
       )
+    }, {
+      stop('unsupported `info`')
     })
   
   x@label <- c(x@label, newlabel) |>

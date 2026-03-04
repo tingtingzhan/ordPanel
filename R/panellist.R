@@ -16,8 +16,11 @@
 panellist <- function(...) {
   
   z <- list(...)
-  # no check written, for now
   
+  if (!all(vapply(z, FUN = inherits, what = 'panel', FUN.VALUE = TRUE))) {
+    stop('All input must be `panel` objects')
+  }
+    
   class(z) <- c('panellist', 'listof', class(z)) |>
     unique.default()
   # to make use of

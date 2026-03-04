@@ -27,37 +27,41 @@ sum0 <- function(x) {
 }
 
 
-#' @importFrom matrixStats colAnys
-.total_positive <- \(x) {
-  # `x` is a \link[base]{logical} \link[base]{matrix}
-  x |> 
-    colAnys() |>
-    sum()
+
+cumOR <- \(x) {
+  
+  # Claude !!!
+  # 'cumulative OR logic'
+  # @param x \link[base]{logical} \link[base]{matrix}
+  
+  nr <- nrow(x)
+  out <- integer(length = nr)
+  
+  seen <- x[1L, ]
+  out[1L] <- sum(seen)
+  
+  for (i in seq_len(nr)[-1L]) {
+    seen <- seen | x[i, ]
+    out[i] <- sum(seen)
+  }
+  
+  return(out)
+  
 }
 
 
-.cum_positive <- \(x) {
-  # `x` is a \link[base]{logical} \link[base]{matrix}
-  x |>
-    nrow() |>
-    seq_len() |> 
-    vapply(FUN = \(i) {
-      x[seq_len(i), , drop = FALSE] |>
-        .total_positive()
-    }, FUN.VALUE = NA_integer_)
-}
 
 #' @rdname sum1
 #' @export
 cumsum1 <- function(x) {
   x@m1 |> 
-    .cum_positive()
+    cumOR()
 }
 
 #' @rdname sum1
 #' @export
 cumsum0 <- function(x) {
   x@m0 |>
-    .cum_positive()
+    cumOR()
 }
 
