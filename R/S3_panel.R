@@ -19,7 +19,8 @@
     m1 = x@m1[i, , drop = FALSE],
     m0 = x@m0[i, , drop = FALSE],
     id = x@id[i],
-    label = x@label#,
+    label = x@label,
+    ordered = x@ordered#,
     #consort = x@consort[i, , drop = FALSE] # do NOT do anything here!!! 
   )
 }
@@ -131,6 +132,10 @@ subset.panel <- function(x, subset, append.label = FALSE, ...) {
 
 #' @title Sort \linkS4class{panel} by Given Criterion
 #' 
+#' @description
+#' To sort a \linkS4class{panel} by some given criterion.
+#' 
+#' 
 #' @param x \linkS4class{panel}
 #' 
 #' @param y one-sided \link[stats]{formula}
@@ -138,7 +143,7 @@ subset.panel <- function(x, subset, append.label = FALSE, ...) {
 #' @param ... additional parameters of \link[base]{order}
 #' 
 #' @returns
-#' The `S3` method [sort_by.panel()] returns a \linkS4class{panel}.
+#' The `S3` method [sort_by.panel()] returns an ***ordered*** \linkS4class{panel}.
 #' 
 #' @export sort_by.panel
 #' @export
@@ -173,6 +178,7 @@ sort_by.panel <- function(x, y, ...) {
     
   }
   
+  ret@ordered <- TRUE
   return(ret)
   
 }
@@ -181,6 +187,11 @@ sort_by.panel <- function(x, y, ...) {
 
 #' @title Convert \linkS4class{panel} into \link[flextable]{flextable}
 #' 
+#' @description
+#' To convert an ordered \linkS4class{panel} into a \link[flextable]{flextable}
+#' using the package \CRANpkg{flextable}.
+#' 
+#' 
 #' @param x \linkS4class{panel}
 #' 
 #' @param ... additional parameters, currently of no use
@@ -188,6 +199,9 @@ sort_by.panel <- function(x, y, ...) {
 #' @returns
 #' The `S3` method [as_flextable.panel()] returns a \link[flextable]{flextable}.
 #' 
+#' @references
+#' 
+#' \url{https://tingtingzhan-ordpanel.netlify.app/panel.html}
 #' 
 #' @importFrom scales label_percent
 #' @export as_flextable.panel
@@ -196,38 +210,49 @@ as_flextable.panel <- function(x, ...) {
   
   n1 <- ncol(x@m1)
   n0 <- ncol(x@m0)
-  c1 <- cumsum1(x)
-  c0 <- cumsum0(x)
   
-  data.frame(
+  d <- data.frame(
     'Variant-Signature' = names(x@id),
-    'Variants in Signature' = x@id |>
+    'Variant(s) in Signature' = x@id |>
       vapply(FUN = paste, collapse = '\n', FUN.VALUE = ''),
     'True(+)' = sprintf(fmt = '%d/%d', sum1(x), n1),
     'False(+)' = sprintf(fmt = '%d/%d', sum0(x), n0),
-    'Sub-Panel True(+)' = (c1/n1) |>
-      label_percent(accuracy = .1)() |>
-      sprintf(fmt = '%s =%d/%d', . = _, c1, n1),
-    'Sub-Panel False(+)' = (c0/n0) |>
-      label_percent(accuracy = .1)() |>
-      sprintf(fmt = '%s =%d/%d', . = _, c0, n0),
     check.names = FALSE
-  ) |>
+  )
+  
+  if (x@ordered) {
+    c1 <- cumsum1(x)
+    c0 <- cumsum0(x)
+    d <- d |> 
+      cbind.data.frame(data.frame(
+        'Sub-Panel True(+)' = (c1/n1) |>
+          label_percent(accuracy = .1)() |>
+          sprintf(fmt = '%s =%d/%d', . = _, c1, n1),
+        'Sub-Panel False(+)' = (c0/n0) |>
+          label_percent(accuracy = .1)() |>
+          sprintf(fmt = '%s =%d/%d', . = _, c0, n0),
+        check.names = FALSE
+      ))
+  }
+  
+  d |>
     flextable() |>
     autofit(part = 'all') |>
     highlight(
       i = (lengths(x@id) > 1L), 
-      j = 2L, 
+      j = 2L, # 'Variant(s) in Signature'
       color = 'lightyellow'
     ) |>
     add_header_row(
       values = c(
-        'Variant-Signature', 'Variants in Signature', 
+        'Variant-Signature', 'Variant(s) in Signature', 
         'Individual Signature', 
-        x@label |>
-          sprintf(fmt = 'Ordered Sub-Panel\n%s')
+        if (x@ordered) {
+          x@label |>
+            sprintf(fmt = 'Ordered Sub-Panel\n%s')
+        }
       ),
-      colwidths = c(1L, 1L, 2L, 2L),
+      colwidths = c(1L, 1L, 2L, if (x@ordered) 2L),
       top = TRUE) |> 
     merge_v(part = 'header') |>
     align(align = 'center', part = 'all')

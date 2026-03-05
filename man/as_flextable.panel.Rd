@@ -15,5 +15,9 @@
 The \code{S3} method \code{\link[=as_flextable.panel]{as_flextable.panel()}} returns a \link[flextable]{flextable}.
 }
 \description{
-Convert \linkS4class{panel} into \link[flextable]{flextable}
+To convert an ordered \linkS4class{panel} into a \link[flextable]{flextable}
+using the package \CRANpkg{flextable}.
+}
+\references{
+\url{https://tingtingzhan-ordpanel.netlify.app/panel.html}
 }

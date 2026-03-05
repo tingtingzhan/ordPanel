@@ -3,8 +3,8 @@
 \docType{data}
 \name{pkg_data}
 \alias{pkg_data}
-\alias{m1}
-\alias{m0}
+\alias{zezulinski1}
+\alias{zezulinski0}
 \title{Data Sets in Package \pkg{ordPanel}}
 \format{
 An object of class \code{matrix} (inherits from \code{array}) with 12877 rows and 50 columns.
@@ -12,9 +12,9 @@ An object of class \code{matrix} (inherits from \code{array}) with 12877 rows an
 An object of class \code{matrix} (inherits from \code{array}) with 12877 rows and 31 columns.
 }
 \usage{
-m1
+zezulinski1
 
-m0
+zezulinski0
 }
 \description{
 Data sets used as examples in package \pkg{ordPanel}.

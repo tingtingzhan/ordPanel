@@ -14,8 +14,8 @@
 \item{...}{additional parameters of \link[base]{order}}
 }
 \value{
-The \code{S3} method \code{\link[=sort_by.panel]{sort_by.panel()}} returns a \linkS4class{panel}.
+The \code{S3} method \code{\link[=sort_by.panel]{sort_by.panel()}} returns an \emph{\strong{ordered}} \linkS4class{panel}.
 }
 \description{
-Sort \linkS4class{panel} by Given Criterion
+To sort a \linkS4class{panel} by some given criterion.
 }

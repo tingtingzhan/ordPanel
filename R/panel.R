@@ -2,17 +2,14 @@
 
 #' @title `S4` Class \linkS4class{panel}
 #' 
-#' @slot m1 \link[base]{logical} \link[base]{matrix}, true positives,
-#' i.e., variants tested positive in the positive subjects (patients).
-#' Rows are different variants.  Columns are different subjects.
-#' The \link[base]{rownames} of `m0` and `m1` must be the same
-#' 
-#' @slot m0 \link[base]{logical} \link[base]{matrix}, false positives,
-#' i.e., variants tested positive in the negative subjects (patients).
+#' @slot m1,m0 \link[base]{logical} \link[base]{matrix}-es, true and false positives, respectively.
+#' In other words, the variants tested positive in the positive and negative subjects (patients), respectively.
 #' Rows are different variants.  Columns are different subjects.
 #' The \link[base]{rownames} of `m0` and `m1` must be the same.
 #' 
 #' @slot id \link[base]{list} of \link[base]{character} \link[base]{vector}s
+#' 
+#' @slot ordered \link[base]{logical} scalar, whether this is an ordered \linkS4class{panel}
 #' 
 #' @slot label (optional) \link[base]{character} scalar, 
 #' a human-friendly description of the \linkS4class{panel}
@@ -20,7 +17,13 @@
 #' @slot consort (optional) \link[base]{data.frame} to 
 #' create a \link[consort]{consort_plot}
 #' 
-#' @param m1,m0 see **Slots**
+#' @param m1,m0 see detailed explanations in Section **Slots**.
+#' \itemize{
+#' \item{If both `m1` and `m0` are missing, then random \link[base]{logical} \link[base]{matrix}-es
+#' will be generated;}
+#' \item{If one-and-only-one of `m1` and `m0` is missing, then the function [panel()] will \link[base]{stop}.}
+#' }
+#' 
 #' 
 #' @returns
 #' The function [panel()] returns an R object of `S4` class \linkS4class{panel}.
@@ -33,14 +36,32 @@ setClass(Class = 'panel', slots = c(
   m1 = 'matrix',
   m0 = 'matrix',
   id = 'list',
+  ordered = 'logical',
   label = 'character',
   consort = 'data.frame'
+), prototype = prototype(
+  ordered = FALSE
 ))
 
 
 #' @rdname panel
 #' @export
-panel <- function(m1, m0) {
+panel <- function(m1 = zezulinski1, m0 = zezulinski0) {
+  
+  has1 <- !missing(m1)
+  has0 <- !missing(m0)
+  
+  if (!has1 && !has0) {
+    # random generation will be super tricky!!
+    'Demo using the data from' |>
+      col_red() |> style_bold() |>
+      message()
+    .zezulinski25() |> 
+      format() |>
+      message()
+  } else if (xor(has1, has0)) {
+    stop('one-and-only-one of `m1` and `m0` is missing!')
+  }
   
   if (!is.matrix(m1) || !is.logical(m1)) stop('Variants tested positive in positive subjects `m1` must be logical-matrix') 
   if (!is.matrix(m0) || !is.logical(m0)) stop('Variants tested positive in negative subjects `m0` must be logical-matrix') 

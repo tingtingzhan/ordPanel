@@ -66,6 +66,11 @@ autolayer.panellist <- function(
     ...
 ) {
   
+  ord. <- object |>
+    vapply(FUN = slot, name = 'ordered', FUN.VALUE = NA) |>
+    all()
+  if (!ord.) stop('all `panel`s must be ordered')
+  
   n1 <- object[[1L]]@m1 |>
     ncol()
   n0 <- object[[1L]]@m0 |>

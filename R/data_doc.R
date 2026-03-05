@@ -14,6 +14,6 @@
 #' 
 #' 
 #' @name pkg_data
-'m1'
+'zezulinski1'
 #' @rdname pkg_data
-'m0'
+'zezulinski0'

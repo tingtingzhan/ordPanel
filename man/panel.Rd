@@ -6,10 +6,15 @@
 \alias{panel-class}
 \title{\code{S4} Class \linkS4class{panel}}
 \usage{
-panel(m1, m0)
+panel(m1 = zezulinski1, m0 = zezulinski0)
 }
 \arguments{
-\item{m1, m0}{see \strong{Slots}}
+\item{m1, m0}{see detailed explanations in Section \strong{Slots}.
+\itemize{
+\item{If both \code{m1} and \code{m0} are missing, then random \link[base]{logical} \link[base]{matrix}-es
+will be generated;}
+\item{If one-and-only-one of \code{m1} and \code{m0} is missing, then the function \code{\link[=panel]{panel()}} will \link[base]{stop}.}
+}}
 }
 \value{
 The function \code{\link[=panel]{panel()}} returns an R object of \code{S4} class \linkS4class{panel}.
@@ -20,17 +25,14 @@ The function \code{\link[=panel]{panel()}} returns an R object of \code{S4} clas
 \section{Slots}{
 
 \describe{
-\item{\code{m1}}{\link[base]{logical} \link[base]{matrix}, true positives,
-i.e., variants tested positive in the positive subjects (patients).
-Rows are different variants.  Columns are different subjects.
-The \link[base]{rownames} of \code{m0} and \code{m1} must be the same}
-
-\item{\code{m0}}{\link[base]{logical} \link[base]{matrix}, false positives,
-i.e., variants tested positive in the negative subjects (patients).
+\item{\code{m1,m0}}{\link[base]{logical} \link[base]{matrix}-es, true and false positives, respectively.
+In other words, the variants tested positive in the positive and negative subjects (patients), respectively.
 Rows are different variants.  Columns are different subjects.
 The \link[base]{rownames} of \code{m0} and \code{m1} must be the same.}
 
 \item{\code{id}}{\link[base]{list} of \link[base]{character} \link[base]{vector}s}
+
+\item{\code{ordered}}{\link[base]{logical} scalar, whether this is an ordered \linkS4class{panel}}
 
 \item{\code{label}}{(optional) \link[base]{character} scalar,
 a human-friendly description of the \linkS4class{panel}}
