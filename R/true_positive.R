@@ -30,24 +30,26 @@ sum0 <- function(x) {
 
 cumOR <- \(x) {
   
-  # Claude !!!
   # 'cumulative OR logic'
   # @param x \link[base]{logical} \link[base]{matrix}
   
-  nr <- nrow(x)
-  out <- integer(length = nr)
+  z <- x
   
-  seen <- x[1L, ]
-  out[1L] <- sum(seen)
+  d <- dim(x)
   
-  for (i in seq_len(nr)[-1L]) {
-    seen <- seen | x[i, ]
-    out[i] <- sum(seen)
+  run <- x[1L, ]
+  
+  for (i in seq_len(d[1L])[-1L]) {
+    z[i, ] <- 
+      run <- 
+      run | x[i, ] # wow!!
   }
   
-  return(out)
+  .rowSums(z, m = d[1L], n = d[2L])
   
 }
+
+
 
 
 
