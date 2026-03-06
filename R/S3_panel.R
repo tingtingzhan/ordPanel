@@ -245,15 +245,21 @@ as_flextable.panel <- function(x, ...) {
     ) |>
     add_header_row(
       values = c(
-        'Variant-Signature', 'Variant(s) in Signature', 
-        'Individual Signature', 
-        if (x@ordered) {
-          x@label |>
-            sprintf(fmt = 'Ordered Sub-Panel\n%s')
+        'Variant-Signature', # col-1
+        'Variant(s) in Signature', # col-2
+        'Individual Signature', # col-3 & 4
+        if (x@ordered) { # col-5 & 6
+          if (!length(x@label)) {
+            'Ordered Sub-Panel'
+          } else {
+            x@label |>
+              sprintf(fmt = 'Ordered Sub-Panel\n%s')
+          }
         }
       ),
       colwidths = c(1L, 1L, 2L, if (x@ordered) 2L),
-      top = TRUE) |> 
+      top = TRUE
+    ) |> 
     merge_v(part = 'header') |>
     align(align = 'center', part = 'all')
 
