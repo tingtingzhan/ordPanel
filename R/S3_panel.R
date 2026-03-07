@@ -56,12 +56,12 @@ subset.panel <- function(x, subset, append.label = FALSE, ...) {
   
   .symbol <- e[[1L]] |> 
     deparse1() |> 
-    switch(EXPR = _, '<=' = '\u2264', '>=' = '\u2265', '<' = '<', '>' = '>')
+    switch(EXPR = _, '<=' = '\u2264', '>=' = '\u2265', '<' = '<', '>' = '>', stop('unsupported comparison symbol'))
   
   # invert symbol
   .inv_symbol <- e[[1L]] |> 
     deparse1() |> 
-    switch(EXPR = _, '<=' = '>', '>=' = '<', '<' = '\u2265', '>' = '\u2264')
+    switch(EXPR = _, '<=' = '>', '>=' = '<', '<' = '\u2265', '>' = '\u2264', stop('unsupported comparison symbol'))
   
   e[[2L]] |>
     deparse1() |>
