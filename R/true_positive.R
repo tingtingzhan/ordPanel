@@ -1,6 +1,6 @@
 
 
-#' @title Number of True & False Positives, per variant
+#' @title Number of True & False Positives
 #' 
 #' @param x \linkS4class{panel}
 #' 
@@ -9,23 +9,23 @@
 #' a \link[base]{integer} \link[base]{vector}.
 #' 
 #' The functions [cumsum1()] and [cumsum0()] return
-#' a **strictly** increasing \link[base]{integer} \link[base]{vector}.
-#' 
+#' a non-decreasing \link[base]{integer} \link[base]{vector}.
 #' 
 #' @name sum1
 #' @export
-sum1 <- function(x) {
-  x@m1 |>
-    rowSums() # number of true positives, per variant
-}
+sum1 <- function(x) rowSums(x@m1) # number of true positives, per variant
 
 #' @rdname sum1
 #' @export
-sum0 <- function(x) {
-  x@m0 |> 
-    rowSums() # number of false positives, per variant
-}
+sum0 <- function(x) rowSums(x@m0) # number of false positives, per variant
 
+#' @rdname sum1
+#' @export
+cumsum1 <- function(x) cumOR(x@m1)
+
+#' @rdname sum1
+#' @export
+cumsum0 <- function(x) cumOR(x@m0)
 
 
 cumOR <- \(x) {
@@ -50,20 +50,4 @@ cumOR <- \(x) {
 }
 
 
-
-
-
-#' @rdname sum1
-#' @export
-cumsum1 <- function(x) {
-  x@m1 |> 
-    cumOR()
-}
-
-#' @rdname sum1
-#' @export
-cumsum0 <- function(x) {
-  x@m0 |>
-    cumOR()
-}
 

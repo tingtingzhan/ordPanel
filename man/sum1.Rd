@@ -5,7 +5,7 @@
 \alias{sum0}
 \alias{cumsum1}
 \alias{cumsum0}
-\title{Number of True & False Positives, per variant}
+\title{Number of True & False Positives}
 \usage{
 sum1(x)
 
@@ -23,8 +23,8 @@ The functions \code{\link[=sum1]{sum1()}} and \code{\link[=sum0]{sum0()}} return
 a \link[base]{integer} \link[base]{vector}.
 
 The functions \code{\link[=cumsum1]{cumsum1()}} and \code{\link[=cumsum0]{cumsum0()}} return
-a \strong{strictly} increasing \link[base]{integer} \link[base]{vector}.
+a non-decreasing \link[base]{integer} \link[base]{vector}.
 }
 \description{
-Number of True & False Positives, per variant
+Number of True & False Positives
 }

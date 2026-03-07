@@ -16,11 +16,20 @@
 panellist <- function(...) {
   
   z <- list(...)
+  if (!length(z)) stop('must input at least one `panel`')
   
   if (!all(vapply(z, FUN = inherits, what = 'panel', FUN.VALUE = TRUE))) {
     stop('All input must be `panel` objects')
   }
-    
+  
+  n0 <- z |>
+    vapply(FUN = \(i) ncol(i@m0), FUN.VALUE = NA_integer_)
+  if (!all(duplicated(n0)[-1L])) stop('number of negative patients, across `panel`s, must be the same')
+  
+  n1 <- z |>
+    vapply(FUN = \(i) ncol(i@m1), FUN.VALUE = NA_integer_)
+  if (!all(duplicated(n1)[-1L])) stop('number of positive patients, across `panel`s, must be the same')
+
   class(z) <- c('panellist', 'listof', class(z)) |>
     unique.default()
   # to make use of
