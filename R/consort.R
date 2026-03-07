@@ -65,6 +65,7 @@ plot.panellist <- function(x, ...) {
   p <- x |>
     lapply(FUN = plot.panel)
   p <- p[lengths(p) > 0L] # remove exception case(s)
+  if (!length(p)) return(invisible()) # exception handling
   
   p |> 
     lapply(FUN = \(i) {
