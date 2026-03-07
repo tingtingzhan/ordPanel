@@ -1,9 +1,9 @@
 
 
-#' @title CONSORT-Like Flow-Chart of Ordered \linkS4class{panel}
+#' @title Flow-Chart of Ordered \linkS4class{panel}
 #' 
 #' @description
-#' To create a CONSORT-Like flow-chart of an ordered \linkS4class{panel}.
+#' To create a flow-chart for the creation of an ordered \linkS4class{panel}.
 #' 
 #' @param x an ordered \linkS4class{panel}
 #' 
@@ -20,6 +20,7 @@ plot.panel <- function(x, ...) {
   
   cst <- x@consort
   nc <- length(cst)
+  if (!nc) return(invisible()) # exception handling
   
   ord <- rep('Signatures', times = nc * 2 + 1L)
   names(ord) <- rep('signature', times = length(ord))
@@ -33,16 +34,20 @@ plot.panel <- function(x, ...) {
     signature = cst |> nrow() |> seq_len(),
     cst
   ) |>
-    consort_plot(data = _, orders = ord, side_box = names(cst), ...)
+    consort_plot(
+      data = _, 
+      orders = ord, 
+      side_box = names(cst), 
+      ...)
     
 } 
 
 
 
-#' @title CONSORT-Like Flow-Chart of Ordered [panellist]
+#' @title Flow-Charts of Ordered [panellist]
 #' 
 #' @description
-#' To create a CONSORT-Like flow-chart of an ordered [panellist].
+#' To create flow-charts for the creation of an ordered [panellist].
 #' 
 #' @param x an ordered [panellist]
 #' 

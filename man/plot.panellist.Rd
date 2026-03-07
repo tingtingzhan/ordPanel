@@ -2,7 +2,7 @@
 % Please edit documentation in R/consort.R
 \name{plot.panellist}
 \alias{plot.panellist}
-\title{CONSORT-Like Flow-Chart of Ordered \link{panellist}}
+\title{Flow-Charts of Ordered \link{panellist}}
 \usage{
 \method{plot}{panellist}(x, ...)
 }
@@ -16,5 +16,5 @@
 The function \code{\link[=plot.panellist]{plot.panellist()}} returns a \link[patchwork]{patchwork}.
 }
 \description{
-To create a CONSORT-Like flow-chart of an ordered \link{panellist}.
+To create flow-charts for the creation of an ordered \link{panellist}.
 }

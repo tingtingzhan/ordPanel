@@ -36,6 +36,7 @@ cumOR <- \(x) {
   z <- x
   
   d <- dim(x)
+  if (d[1L] == 0L) return(integer()) # exception handling
   
   run <- x[1L, ]
   

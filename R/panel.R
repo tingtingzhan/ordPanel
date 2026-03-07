@@ -67,6 +67,7 @@ panel <- function(m1 = zezulinski1, m0 = zezulinski0) {
   if (!is.matrix(m0) || !is.logical(m0)) stop('Variants tested positive in negative subjects `m0` must be logical-matrix') 
   nr <- nrow(m1)
   if (nr != nrow(m0)) stop('`m0` and `m1` must have same number of rows')
+  if (nr == 0L) stop('`m0` and `m1` cannot be nrow-0 matrices')
   r <- rownames(m1)
   if (!identical(r, rownames(m0))) stop('`m0` and `m1` must have identical row-names')
   

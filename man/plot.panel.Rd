@@ -2,7 +2,7 @@
 % Please edit documentation in R/consort.R
 \name{plot.panel}
 \alias{plot.panel}
-\title{CONSORT-Like Flow-Chart of Ordered \linkS4class{panel}}
+\title{Flow-Chart of Ordered \linkS4class{panel}}
 \usage{
 \method{plot}{panel}(x, ...)
 }
@@ -16,5 +16,5 @@ except for \code{data}, \code{orders} and \code{side_box}}
 The function \code{\link[=plot.panel]{plot.panel()}} returns an R object of class \code{'consort'}.
 }
 \description{
-To create a CONSORT-Like flow-chart of an ordered \linkS4class{panel}.
+To create a flow-chart for the creation of an ordered \linkS4class{panel}.
 }
