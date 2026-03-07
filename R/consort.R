@@ -11,7 +11,15 @@
 #' except for `data`, `orders` and `side_box`
 #' 
 #' @returns 
-#' The function [plot.panel()] returns an R object of class `'consort'`.
+#' The function [plot.panel()] returns 
+#' \itemize{
+#' \item{an R object of class `'consort'` 
+#' (returned from the function \link[consort]{consort_plot}), 
+#' if the input \linkS4class{panel} has a non-default `@consort` slot;}
+#' \item{an \link[base]{invisible} `NULL`-value, 
+#' if the input \linkS4class{panel} has a default `@consort` slot.}
+#' }
+#' 
 #' 
 #' @importFrom consort consort_plot
 #' @export plot.panel
@@ -55,7 +63,17 @@ plot.panel <- function(x, ...) {
 #' **not** for the function [plot.panel()]
 #' 
 #' @returns 
-#' The function [plot.panellist()] returns a \link[patchwork]{patchwork}.
+#' The function [plot.panellist()] returns 
+#' \itemize{
+#' \item{a \link[patchwork]{patchwork}, 
+#' (returned from the function \link[patchwork]{wrap_plots}), 
+#' if the input [panellist] has at least one \linkS4class{panel} 
+#' with a non-default `@consort` slot;}
+#' \item{an \link[base]{invisible} `NULL`-value, 
+#' if all \linkS4class{panel}s in the input [panellist] have a default `@consort` slot.}
+#' }
+#' 
+#' 
 #' 
 #' @importFrom consort build_grid
 #' @export plot.panellist

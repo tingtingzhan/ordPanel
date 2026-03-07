@@ -13,7 +13,14 @@
 except for \code{data}, \code{orders} and \code{side_box}}
 }
 \value{
-The function \code{\link[=plot.panel]{plot.panel()}} returns an R object of class \code{'consort'}.
+The function \code{\link[=plot.panel]{plot.panel()}} returns
+\itemize{
+\item{an R object of class \code{'consort'}
+(returned from the function \link[consort]{consort_plot}),
+if the input \linkS4class{panel} has a non-default \verb{@consort} slot;}
+\item{an \link[base]{invisible} \code{NULL}-value,
+if the input \linkS4class{panel} has a default \verb{@consort} slot.}
+}
 }
 \description{
 To create a flow-chart for the creation of an ordered \linkS4class{panel}.

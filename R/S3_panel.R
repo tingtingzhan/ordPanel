@@ -50,6 +50,8 @@
 subset.panel <- function(x, subset, append.label = FALSE, ...) {
   
   e <- substitute(subset)
+  if (!is.call(e)) stop('`subset` parameter must take a `call` (not a `symbol`)')
+  
   e. <- e
   
   .symbol <- e[[1L]] |> 

@@ -13,7 +13,15 @@
 \strong{not} for the function \code{\link[=plot.panel]{plot.panel()}}}
 }
 \value{
-The function \code{\link[=plot.panellist]{plot.panellist()}} returns a \link[patchwork]{patchwork}.
+The function \code{\link[=plot.panellist]{plot.panellist()}} returns
+\itemize{
+\item{a \link[patchwork]{patchwork},
+(returned from the function \link[patchwork]{wrap_plots}),
+if the input \link{panellist} has at least one \linkS4class{panel}
+with a non-default \verb{@consort} slot;}
+\item{an \link[base]{invisible} \code{NULL}-value,
+if all \linkS4class{panel}s in the input \link{panellist} have a default \verb{@consort} slot.}
+}
 }
 \description{
 To create flow-charts for the creation of an ordered \link{panellist}.
