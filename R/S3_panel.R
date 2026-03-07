@@ -83,7 +83,7 @@ subset.panel <- function(x, subset, append.label = FALSE, ...) {
       id <- c(1L, which(eval(e.)) + 1L)
       .crit <- 'Increment True(+)'
       .labs <- sprintf(fmt = 'Increment True(+) %s%d/%d', c(.symbol, .inv_symbol), e.[[3L]], x@m1 |> ncol())
-    })
+    }, stop('unsuppored subset-expression'))
 
   ret <- x[id, ] # `[.panel`
   

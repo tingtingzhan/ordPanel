@@ -62,10 +62,13 @@ plot.panel <- function(x, ...) {
 #' @export
 plot.panellist <- function(x, ...) {
   
-  x |> 
+  p <- x |>
+    lapply(FUN = plot.panel)
+  p <- p[lengths(p) > 0L] # remove exception case(s)
+  
+  p |> 
     lapply(FUN = \(i) {
       i |> 
-        plot.panel() |> 
         build_grid() |>
         wrap_elements()
     }) |>
