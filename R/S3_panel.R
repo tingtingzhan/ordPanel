@@ -187,26 +187,7 @@ sort_by.panel <- function(x, y, ...) {
 
 
 
-#' @title Convert \linkS4class{panel} into \link[flextable]{flextable}
-#' 
-#' @description
-#' To convert an ordered \linkS4class{panel} into a \link[flextable]{flextable}
-#' using the package \CRANpkg{flextable}.
-#' 
-#' 
-#' @param x \linkS4class{panel}
-#' 
-#' @param ... additional parameters, currently of no use
-#' 
-#' @returns
-#' The `S3` method [as_flextable.panel()] returns a \link[flextable]{flextable}.
-#' 
-#' @references
-#' 
-#' \url{https://tingtingzhan-ordpanel.netlify.app/panel.html}
-#' 
 #' @importFrom scales label_percent
-#' @export as_flextable.panel
 #' @export
 as_flextable.panel <- function(x, ...) {
   

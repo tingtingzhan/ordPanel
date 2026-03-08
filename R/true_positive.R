@@ -28,27 +28,36 @@ cumsum1 <- function(x) cumOR(x@m1)
 cumsum0 <- function(x) cumOR(x@m0)
 
 
+
+
+
+# 'cumulative OR logic'
+# @param x \link[base]{logical} \link[base]{matrix}
 cumOR <- \(x) {
-  
-  # 'cumulative OR logic'
-  # @param x \link[base]{logical} \link[base]{matrix}
-  
-  z <- x
-  
+
   d <- dim(x)
   if (d[1L] == 0L) return(integer()) # exception handling
   
-  run <- x[1L, ]
+  # slower with large-nrow matrix!!
+  # z <- x
+  # run <- x[1L, ]
+  # for (i in seq_len(d[1L])[-1L]) {
+  #   z[i, ] <- run <- (run | x[i, ])
+  # }
+  # .rowSums(z, m = d[1L], n = d[2L])
+  # end of slower with large-nrow matrix!!
   
-  for (i in seq_len(d[1L])[-1L]) {
-    z[i, ] <- 
-      run <- 
-      run | x[i, ] # wow!!
-  }
-  
-  .rowSums(z, m = d[1L], n = d[2L])
-  
+  x |>
+    asplit(MARGIN = 1, drop = TRUE) |>
+    Reduce(f = `|`, x = _, accumulate = TRUE) |>
+    #vapply(FUN = sum, FUN.VALUE = NA_integer_) # slightly slower
+    do.call(what = rbind, args = _) |>
+    .rowSums(m = d[1L], n = d[2L])
+
 }
+
+
+
 
 
 
