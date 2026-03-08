@@ -1,14 +1,5 @@
 
 
-#' @title Bibliography in package \pkg{ordPanel}
-#' 
-#' @param key,... additional parameters of the function \link[utils]{bibentry}
-#' 
-#' @returns
-#' The function [.zezulinski25()] returns a \link[utils]{bibentry} object.
-#'   
-#' @name ordPanel_bib
-#' @export
 .zezulinski25 <- \(key = 'Zezulinski25', ...) {
   bibentry(
     bibtype = 'article', key = key, ...,

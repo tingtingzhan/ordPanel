@@ -19,12 +19,6 @@ zezulinski0
 \description{
 Data sets used as examples in package \pkg{ordPanel}.
 }
-\examples{
-# data used in 
-.zezulinski25()
-
-
-}
 \references{
 \doi{10.1159/000545366}
 }

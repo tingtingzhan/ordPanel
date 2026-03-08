@@ -8,11 +8,6 @@
 #' @references
 #' \doi{10.1159/000545366}
 #' 
-#' @examples
-#' # data used in 
-#' .zezulinski25()
-#' 
-#' 
 #' @name pkg_data
 'zezulinski1'
 #' @rdname pkg_data
