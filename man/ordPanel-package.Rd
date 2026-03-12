@@ -21,7 +21,7 @@ Useful links:
 
 Other contributors:
 \itemize{
-  \item Aejaz Sayeed \email{aejaz.sayeed@bblumberg.org} (\href{https://orcid.org/0000-0001-6900-7524}{ORCID}) [contributor]
+  \item Aejaz Sayeed (\href{https://orcid.org/0000-0001-6900-7524}{ORCID}) [contributor]
 }
 
 }
