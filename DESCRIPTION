@@ -15,7 +15,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 LazyData: true
 LazyDataCompression: xz
-URL: https://github.com/tingtingzhan/ordPanel, https://tingtingzhan-ordpanel.netlify.app
+URL: https://github.com/tingtingzhan/ordPanel, https://tingtingzhan.quarto.pub/ordpanel/, https://tingtingzhan-ordpanel.netlify.app
 Depends: R (>= 4.5.0)
 Imports: cli, flextable, ggplot2, methods, consort, patchwork, scales
 Suggests: 

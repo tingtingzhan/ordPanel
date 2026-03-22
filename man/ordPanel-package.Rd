@@ -12,6 +12,7 @@ The ordered panel methodology (Zezulinski et al 2025 \doi{10.1159/000545366}) pr
 Useful links:
 \itemize{
   \item \url{https://github.com/tingtingzhan/ordPanel}
+  \item \url{https://tingtingzhan.quarto.pub/ordpanel/}
   \item \url{https://tingtingzhan-ordpanel.netlify.app}
 }
 
