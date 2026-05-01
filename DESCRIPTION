@@ -1,8 +1,8 @@
 Package: ordPanel
 Type: Package
 Title: Ordered Panel
-Version: 0.1.1.20260322
-Date: 2026-03-22
+Version: 0.1.1.20260501
+Date: 2026-05-01
 Description: The ordered panel methodology (Zezulinski et al 2025 <doi:10.1159/000545366>) provides a structured framework for identifying and organizing sets of biomarkers, such as genetic variants, that distinguish between positive and negative subjects in a study when only a training cohort is available. This approach is particularly useful in situations where an independent validation cohort does not yet exist, rendering conventional performance metrics such as the receiver operating characteristic (ROC) curve and area under the ROC curve (AUC) inappropriate or potentially misleading. The methodology emphasizes transparent construction and evaluation of ordered signatures of biomarkers, allowing investigators to examine operating characteristics without establishing predictive performance.
 License: GPL-2
 Encoding: UTF-8
@@ -11,8 +11,6 @@ Authors@R: c(person(given = "Tingting", family = "Zhan", role = c("aut",
         '0000-0001-9971-4844')), person(given = "Aejaz", family = "Sayeed", 
         role = "ctb", comment = c(ORCID = '0000-0001-6900-7524')))
 Language: en-US
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 LazyData: true
 LazyDataCompression: xz
 URL: https://github.com/tingtingzhan/ordPanel, https://tingtingzhan.quarto.pub/ordpanel/, https://tingtingzhan-ordpanel.netlify.app
@@ -21,3 +19,5 @@ Imports: cli, flextable, ggplot2, methods, consort, patchwork, scales
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0
+Config/roxygen2/markdown: TRUE
